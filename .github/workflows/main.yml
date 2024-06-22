@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-2016  # The closest available runner, as windows-latest does not support Vista
+    runs-on: windows-latest  # The closest available runner, as windows-latest does not support Vista
 
     steps:
       - name: Checkout repository
