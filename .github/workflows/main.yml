@@ -11,6 +11,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PSPDEV: ${{ github.workspace }}/pspdev
 
     steps:
       - name: Checkout repository
@@ -24,14 +26,17 @@ jobs:
 
       - name: Set up PSP dev kit
         run: |
+          echo $PSPDEV
           git clone https://github.com/djdiskmachine/pspdev
-          echo 'export PSPDEV=$HOME/pspdev' >> $GITHUB_ENV
-          echo 'export PATH=$PATH:$PSPDEV/bin' >> $GITHUB_ENV
+          ls -l $PSPDEV
 
       - name: Install Miyoo Mini toolchain
         run: |
           wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
-          sudo tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/
+          ls -la /opt/
+          mkdir /opt/
+          tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/
+          ls -la /opt/
 
       - name: Build DEB
         run: |
@@ -44,7 +49,9 @@ jobs:
             make PLATFORM=PSP
 
       - name: Build Miyoo Mini
-        run: make PLATFORM=MIYOO
+        run: |
+          cd projects
+          make PLATFORM=MIYOO
 
       # - name: Package artifacts
       #   run: ./resources/packaging/lgpt_package.sh
