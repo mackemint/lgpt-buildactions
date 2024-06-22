@@ -22,7 +22,20 @@ jobs:
           sudo apt update
           sudo apt install -y git make gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
 
-      - name: Build project
+      - name: Set up PSP dev kit
+        run: |
+          sudo apt install -y build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
+          git clone https://github.com/djdiskmachine/pspdev
+          echo 'export PSPDEV=$HOME/pspdev' >> $HOME/.bashrc
+          echo 'export PATH=$PATH:$PSPDEV/bin' >> $HOME/.bashrc
+          source $HOME/.bashrc
+
+      - name: Build DEB
         run: |
           cd projects
           make PLATFORM=DEB
+
+      - name: Build PSP
+        run: |
+            cd projects
+            make PLATFORM=PSP
