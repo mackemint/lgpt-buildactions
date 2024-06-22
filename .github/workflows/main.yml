@@ -20,15 +20,20 @@ jobs:
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update
-          sudo apt install -y git make gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
+          sudo apt install -y gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386 build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot libncurses-dev
 
       - name: Set up PSP dev kit
         run: |
-          sudo apt install -y build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
           git clone https://github.com/djdiskmachine/pspdev
           PSPDEV=$HOME/pspdev
           PATH=$PATH:$PSPDEV/bin
-          cat $PSPDEV $PATH
+          echo $PATH
+          echo $PSPDEV
+
+      - name: Install Miyoo Mini toolchain
+        run: |
+          wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
+          sudo tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/
 
       - name: Build DEB
         run: |
@@ -40,13 +45,16 @@ jobs:
             cd projects
             make PLATFORM=PSP
 
-      - name: Package artifacts
-        run: ./resources/packaging/lgpt_package.sh
+      - name: Build Miyoo Mini
+        run: make PLATFORM=MIYOO
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: autobuild-${{ github.sha }}
-          path: |
-            ./projects/*.zip
+      # - name: Package artifacts
+      #   run: ./resources/packaging/lgpt_package.sh
+
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: autobuild-${{ github.sha }}
+      #     path: |
+      #       ./projects/*.zip
     
