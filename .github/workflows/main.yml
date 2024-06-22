@@ -24,10 +24,11 @@ jobs:
       - name: Link dev kit
         run: |
           git clone https://github.com/djdiskmachine/pspdev
-          cd pspdev
           export PSPDEV=~/pspdev
           export PATH=$PATH:$PSPDEV/bin
           source ~/.bashrc
       
       - name: Build project
-        run: make PLATFORM=PSP
+        run: |
+          cd projects
+          make PLATFORM=PSP
