@@ -28,16 +28,19 @@ jobs:
         run: |
           echo "$PSPDEV/bin" >> $GITHUB_PATH 
           git clone https://github.com/djdiskmachine/pspdev
-          ls -l $PSPDEV
 
-      # - name: Install Miyoo Mini toolchain
-      #   run: |
-      #     wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
-      #     ls -la /opt/
-      #     mkdir /opt/
-      #     tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/
-      #     ls -la /opt/
+      - name: Install Miyoo Mini toolchain
+        run: |
+          wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
+          mkdir /opt/
+          tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/
+          ls -la /opt/
 
+      - name: Build Miyoo Mini
+        run: |
+          cd projects
+          make PLATFORM=MIYOO
+          
       - name: Build DEB
         run: |
           cd projects
@@ -45,13 +48,9 @@ jobs:
 
       - name: Build PSP
         run: |
-            cd projects
-            make PLATFORM=PSP
+          cd projects
+          make PLATFORM=PSP
 
-      # - name: Build Miyoo Mini
-      #   run: |
-      #     cd projects
-      #     make PLATFORM=MIYOO
 
       # - name: Package artifacts
       #   run: ./resources/packaging/lgpt_package.sh
