@@ -18,17 +18,18 @@ jobs:
       
       - name: Install required libraries
         run: |
+          sudo dpkg --add-architecture i386
           sudo apt update
-          sudo apt install -y build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
-      
-      - name: Link dev kit
-        run: |
-          git clone https://github.com/djdiskmachine/pspdev
-          export PSPDEV=~/pspdev
-          export PATH=$PATH:$PSPDEV/bin
-          source ~/.bashrc
+    	    sudo apt install -y git make gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
+
+      # - name: Link dev kit
+      #   run: |
+      #     git clone https://github.com/djdiskmachine/pspdev
+      #     export PSPDEV=~/pspdev
+      #     export PATH=$PATH:$PSPDEV/bin
+      #     source ~/.bashrc
       
       - name: Build project
         run: |
           cd projects
-          make PLATFORM=PSP
+          make PLATFORM=DEB
