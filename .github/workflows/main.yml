@@ -25,7 +25,9 @@ jobs:
         run: |
           git clone https://github.com/djdiskmachine/pspdev
           cd pspdev
-          ./toolchain.sh
+          export PSPDEV=~/pspdev
+          export PATH=$PATH:$PSPDEV/bin
+          source ~/.bashrc
       
       - name: Build project
         run: make PLATFORM=PSP
