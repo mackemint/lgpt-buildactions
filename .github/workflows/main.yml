@@ -29,7 +29,7 @@ jobs:
           echo 'export PSPDEV=$HOME/pspdev' >> $HOME/.bashrc
           echo 'export PATH=$PATH:$PSPDEV/bin' >> $HOME/.bashrc
           source $HOME/.bashrc
-          echo $HOME/.bashrc
+          cat $HOME/.bashrc
 
       - name: Build DEB
         run: |
