@@ -13,28 +13,29 @@ jobs:
     runs-on: windows-latest  # The closest available runner, as windows-latest does not support Vista
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install dependencies
+      - name: Install Visual Studio Build Tools
         run: |
-          choco install -y visualstudio2008express
+          choco install -y visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
+
+      - name: Install DirectX SDK
+        run: |
           choco install -y directx-sdk
 
       - name: Set up environment
         run: |
-          # Set up environment variables for Visual Studio 2008
-          CALL "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat" x86
+          # Set up environment variables for Visual Studio 2019
+          CALL "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86
           # Set up environment variables for DirectX SDK
-          set DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (March 2008)
+          set DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)
           set PATH=%DXSDK_DIR%\Utilities\Bin\x86;%PATH%
           set INCLUDE=%DXSDK_DIR%\Include;%INCLUDE%
           set LIB=%DXSDK_DIR%\Lib\x86;%LIB%
 
       - name: Build project
         run: |
-          # Build the project using Visual Studio 2008
+          # Build the project using Visual Studio 2019
           msbuild lgpt.sln /p:Configuration=Release /p:Platform=Win32
+
   build:
     runs-on: ubuntu-latest
     env:
