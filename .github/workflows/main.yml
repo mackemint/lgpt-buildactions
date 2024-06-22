@@ -25,18 +25,16 @@ jobs:
       - name: Set up PSP dev kit
         run: |
           git clone https://github.com/djdiskmachine/pspdev
+          echo 'export PSPDEV=$HOME/pspdev' >> $GITHUB_ENV
+          echo 'export PATH=$PATH:$PSPDEV/bin' >> $GITHUB_ENV
 
-          - name: Install Miyoo Mini toolchain
-          run: |
+      - name: Install Miyoo Mini toolchain
+        run: |
           wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
           sudo tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/
 
       - name: Build DEB
         run: |
-          PSPDEV=$HOME/pspdev
-          PATH=$PATH:$PSPDEV/bin
-          echo $PATH
-          echo $PSPDEV
           cd projects
           make PLATFORM=DEB
 
