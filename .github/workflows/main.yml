@@ -26,10 +26,9 @@ jobs:
         run: |
           sudo apt install -y build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
           git clone https://github.com/djdiskmachine/pspdev
-          echo 'export PSPDEV=$HOME/pspdev' >> $HOME/.bashrc
-          echo 'export PATH=$PATH:$PSPDEV/bin' >> $HOME/.bashrc
-          source $HOME/.bashrc
-          cat $HOME/.bashrc
+          PSPDEV=$HOME/pspdev
+          PATH=$PATH:$PSPDEV/bin
+          cat $PSPDEV $PATH
 
       - name: Build DEB
         run: |
