@@ -24,6 +24,12 @@ jobs:
       - name: Setup MSBuild path
         uses: microsoft/setup-msbuild@v1
 
+      - name: Upgrade solution
+        run: |
+          cd projects
+          & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
+          devenv.exe lgpt.sln /Upgrade
+
       - name: Build solution
         run: |
           cd projects
