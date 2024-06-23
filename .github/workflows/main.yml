@@ -11,19 +11,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Install DirectX SDK and Visual Studio 2019 Build Tools
+        run: choco install -y directx-sdk visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
+        shell: powershell
+
+      - name: Set DirectX SDK environment variable
+        run: |
+          [System.Environment]::SetEnvironmentVariable('DXSDK_DIR', 'C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)', [System.EnvironmentVariableTarget]::Machine)
+        shell: powershell
 
       - name: Setup MSBuild path
-        uses: microsoft/setup-msbuild@v1  # Sets up MSBuild
-      
-      - name: Install & build with Visual Studio
-        shell: pwsh
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build solution
         run: |
-          choco install -y directx-sdk visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
-          $env:DXSDK_DIR = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
-          $env:PATH = "$env:DXSDK_DIR\Utilities\Bin\x86;$env:PATH"
-          $env:INCLUDE = "$env:DXSDK_DIR\Include;$env:INCLUDE"
-          $env:LIB = "$env:DXSDK_DIR\Lib\x86;$env:LIB"
           msbuild lgpt.sln /p:Configuration=Release /p:Platform=Win32
 
   build:
