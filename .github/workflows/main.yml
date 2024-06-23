@@ -20,27 +20,20 @@ jobs:
         run: choco install -y directx-sdk
 
       - name: Verify Visual Studio Installation
-        shell: cmd
+        shell: powershell
         run: |
-          echo Verifying Visual Studio 2019 installation directory
           dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build"
 
       - name: Set up environment and build project
-        shell: cmd
+        shell: powershell
         run: |
-          echo Setting up environment variables for Visual Studio 2019
-          "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86
-          if %errorlevel% neq 0 exit /b %errorlevel%
-
-          echo Setting up environment variables for DirectX SDK
+          & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat"      
           set DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)
           set PATH=%DXSDK_DIR%\Utilities\Bin\x86;%PATH%
           set INCLUDE=%DXSDK_DIR%\Include;%INCLUDE%
           set LIB=%DXSDK_DIR%\Lib\x86;%LIB%
 
-          echo Building the project using Visual Studio 2019
           msbuild lgpt.sln /p:Configuration=Release /p:Platform=Win32
-          if %errorlevel% neq 0 exit /b %errorlevel%
           
   build:
     runs-on: ubuntu-latest
