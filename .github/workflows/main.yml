@@ -24,7 +24,7 @@ jobs:
       - name: Set up environment
         run: |
           # Set up environment variables for Visual Studio 2019
-          CALL "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvarsall.bat" x86
           # Set up environment variables for DirectX SDK
           set DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)
           set PATH=%DXSDK_DIR%\Utilities\Bin\x86;%PATH%
