@@ -14,9 +14,11 @@ jobs:
 
     steps:
       - name: Install Visual Studio Build Tools
+        shell: powershell
         run: choco install -y visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
 
       - name: Install DirectX SDK
+        shell: powershell
         run: choco install -y directx-sdk
 
       - name: Set up environment and build project
@@ -29,7 +31,7 @@ jobs:
           set LIB=%DXSDK_DIR%\Lib\x86;%LIB%
 
           msbuild lgpt.sln /p:Configuration=Release /p:Platform=Win32
-          
+
   build:
     runs-on: ubuntu-latest
     env:
