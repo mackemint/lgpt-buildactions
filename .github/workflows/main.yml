@@ -1,16 +1,12 @@
-name: Build
+name: Release build
 
-on:
-  push:
-    branches:
-      - '**'
-  pull_request:
-    branches:
-      - '**'
+on: [push, pull_request]
+# on: # Make a release build
+#   workflow_dispatch:
 
 jobs:
   build-windows:
-    runs-on: windows-latest  # The closest available runner, as windows-latest does not support Vista
+    runs-on: windows-latest
 
     steps:
       - name: Install Visual Studio Build Tools
@@ -29,7 +25,7 @@ jobs:
           $env:PATH = "$env:DXSDK_DIR\Utilities\Bin\x86;$env:PATH"
           $env:INCLUDE = "$env:DXSDK_DIR\Include;$env:INCLUDE"
           $env:LIB = "$env:DXSDK_DIR\Lib\x86;$env:LIB"
-          msbuild lgpt.sln /p:Configuration=Release /p:Platform=Win32
+          msbuild.exe lgpt.sln /p:Configuration=Release /p:Platform=Win32
 
   build:
     runs-on: ubuntu-latest
@@ -56,7 +52,6 @@ jobs:
           wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
           mkdir /opt/miyoomini-toolchain
           tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/miyoomini-toolchain  --strip-components=1
-          ls -la /opt/miyoomini-toolchain
 
       - name: Build Miyoo Mini
         run: |
