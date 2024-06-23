@@ -25,7 +25,7 @@ jobs:
         shell: powershell
         run: |
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat"      
-          set DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)
+          set DXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
           set PATH=%DXSDK_DIR%\Utilities\Bin\x86;%PATH%
           set INCLUDE=%DXSDK_DIR%\Include;%INCLUDE%
           set LIB=%DXSDK_DIR%\Lib\x86;%LIB%
