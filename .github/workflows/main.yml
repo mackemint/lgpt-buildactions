@@ -19,6 +19,12 @@ jobs:
       - name: Install DirectX SDK
         run: choco install -y directx-sdk
 
+      - name: Verify Visual Studio Installation
+        shell: cmd
+        run: |
+          echo Verifying Visual Studio 2019 installation directory
+          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build"
+
       - name: Set up environment and build project
         shell: cmd
         run: |
