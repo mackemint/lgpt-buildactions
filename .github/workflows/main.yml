@@ -9,6 +9,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild path
+        uses: microsoft/setup-msbuild@v1  # Sets up MSBuild
+      
       - name: Install & build with Visual Studio
         shell: pwsh
         run: |
