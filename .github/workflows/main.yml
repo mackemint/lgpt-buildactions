@@ -31,6 +31,7 @@ jobs:
           msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS"
 
       - name: Package windows
+        shell: bash
         run: |
             cd projects
             ./resources/packaging/lgpt_package.sh
