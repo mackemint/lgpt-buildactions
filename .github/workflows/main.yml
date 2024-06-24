@@ -72,13 +72,13 @@ jobs:
           make PLATFORM=PSP
 
 
-      # - name: Package artifacts
-      #   run: ./resources/packaging/lgpt_package.sh
+      - name: Package artifacts
+        run: ./resources/packaging/lgpt_package.sh
 
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: autobuild-${{ github.sha }}
-      #     path: |
-      #       ./projects/*.zip
+      - name: Upload artifacts
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: autobuild-${{ github.sha }}
+          files: |
+            ./projects/*.zip
     
