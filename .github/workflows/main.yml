@@ -18,7 +18,7 @@ jobs:
 
       - name: Set DirectX SDK environment variable
         run: |
-          [System.Environment]::SetEnvironmentVariable('DXSDK_DIR', 'C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)', [System.EnvironmentVariableTarget]::Machine)
+         '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
         shell: powershell
 
       - name: Setup MSBuild path
@@ -28,7 +28,7 @@ jobs:
         run: |
           cd projects
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
-          msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:PreprocessorDefinitions="_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS"
+          msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:DefineConstants="_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS"
 
   build:
     runs-on: ubuntu-latest
