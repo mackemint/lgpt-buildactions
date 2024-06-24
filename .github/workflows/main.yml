@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-artifacts
-          path: ./projects/lgpt*.*exe
+          path: ./projects/*/lgpt-W32.exe
 
   build:
     runs-on: ubuntu-latest
