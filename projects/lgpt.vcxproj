@@ -25,27 +25,33 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AA286D27-4C78-44DD-B559-F08A533C5935}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='demo_sane|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Demo|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rendered|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -92,6 +98,9 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='demo_sane|Win32'">false</GenerateManifest>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lgptd</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\vboxuser\Documents\SDL-1.2-release-1.2.13\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -108,10 +117,10 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>sdlmain.lib;sdl.lib;winmm.lib;dsound.lib;SDL_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdlmain.lib;sdl.lib;winmm.lib;dsound.lib;SDL_image.lib;msvcrt.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)lgptd.exe</OutputFile>
       <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>msvcrt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)lgpt.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -119,6 +128,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -246,7 +256,7 @@
     <ClCompile Include="..\sources\System\FileSystem\FileSystem.cpp" />
     <ClCompile Include="..\sources\System\io\Status.cpp" />
     <ClCompile Include="..\sources\System\Timer\Timer.cpp" />
-    <ClCompile Include="..\sources\System\io\Trace.cpp" />
+    <ClCompile Include="..\sources\System\Console\Trace.cpp" />
     <ClCompile Include="..\sources\System\Process\Process.cpp" />
     <ClCompile Include="..\sources\Foundation\Observable.cpp" />
     <ClCompile Include="..\sources\Foundation\SingletonRegistry.cpp" />
@@ -298,7 +308,6 @@
     <ClCompile Include="..\sources\Application\Views\ModalDialogs\MessageBox.cpp" />
     <ClCompile Include="..\sources\Application\Views\ModalDialogs\NewProjectDialog.cpp" />
     <ClCompile Include="..\sources\Application\Views\ModalDialogs\SelectProjectDialog.cpp" />
-    <ClCompile Include="..\sources\Application\utils\assert.cpp" />
     <ClCompile Include="..\sources\Application\utils\char.cpp" />
     <ClCompile Include="..\sources\Application\utils\fixed.cpp" />
     <ClCompile Include="..\sources\Application\utils\HexBuffers.cpp" />
@@ -375,6 +384,7 @@
     <ClCompile Include="..\sources\Services\Controllers\KeyboardControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\MultiChannelAdapter.cpp" />
     <ClCompile Include="..\sources\Services\Time\TimeService.cpp" />
+    <ClCompile Include="..\sources\System\Console\n_assert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sources\Adapters\W32FileSystem\W32FileSystem.h" />
@@ -506,6 +516,7 @@
     <ClInclude Include="..\sources\Services\Controllers\KeyboardControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\MultiChannelAdapter.h" />
     <ClInclude Include="..\sources\Services\Time\TimeService.h" />
+    <ClInclude Include="..\sources\System\Console\n_assert.h" />
     <ClInclude Include="..\sources\Resources\resource.h" />
   </ItemGroup>
   <ItemGroup>
