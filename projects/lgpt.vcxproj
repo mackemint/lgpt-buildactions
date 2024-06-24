@@ -250,7 +250,6 @@
     <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiOutDevice.cpp" />
     <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiService.cpp" />
     <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiInDevice.cpp" />
-    <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiInMerger.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\GUIFactory.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\SDLEventManager.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\SDLGUIWindowImp.cpp" />
@@ -379,6 +378,7 @@
     <ClCompile Include="..\sources\Services\Midi\MidiOutDevice.cpp" />
     <ClCompile Include="..\sources\Services\Midi\MidiService.cpp" />
     <ClCompile Include="..\sources\Services\Midi\MidiChannel.cpp" />
+    <ClCompile Include="..\sources\Services\Midi\RTMidiInMerger.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ButtonControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\Channel.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ControllableVariable.cpp" />
@@ -404,7 +404,6 @@
     <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiOutDevice.h" />
     <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiService.h" />
     <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiInDevice.h" />
-    <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiInMerger.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\GUIFactory.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\SDLEventManager.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\SDLGUIWindowImp.h" />
@@ -518,6 +517,7 @@
     <ClInclude Include="..\sources\Services\Midi\MidiOutDevice.h" />
     <ClInclude Include="..\sources\Services\Midi\MidiService.h" />
     <ClInclude Include="..\sources\Services\Midi\MidiChannel.h" />
+    <ClInclude Include="..\sources\Services\Midi\RTMidiInMerger.h" />
     <ClInclude Include="..\sources\Services\Controllers\ButtonControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\Channel.h" />
     <ClInclude Include="..\sources\Services\Controllers\ControllableVariable.h" />
