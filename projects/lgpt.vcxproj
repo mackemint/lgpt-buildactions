@@ -249,6 +249,8 @@
     <ClCompile Include="..\sources\Adapters\W32\Audio\W32AudioDriver.cpp" />
     <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiOutDevice.cpp" />
     <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiService.cpp" />
+    <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiInDevice.cpp" />
+    <ClCompile Include="..\sources\Adapters\RTMidi\RTMidiInMerger.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\GUIFactory.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\SDLEventManager.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\SDLGUIWindowImp.cpp" />
@@ -389,6 +391,7 @@
     <ClCompile Include="..\sources\Services\Controllers\MultiChannelAdapter.cpp" />
     <ClCompile Include="..\sources\Services\Time\TimeService.cpp" />
     <ClCompile Include="..\sources\System\Console\n_assert.cpp" />
+    <ClCompile Include="..\sources\System\Process\SysMutex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\sources\Adapters\W32FileSystem\W32FileSystem.h" />
@@ -400,6 +403,8 @@
     <ClInclude Include="..\sources\Adapters\W32\Audio\W32AudioDriver.h" />
     <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiOutDevice.h" />
     <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiService.h" />
+    <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiInDevice.h" />
+    <ClInclude Include="..\sources\Adapters\RTMidi\RTMidiInMerger.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\GUIFactory.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\SDLEventManager.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\SDLGUIWindowImp.h" />
@@ -525,6 +530,7 @@
     <ClInclude Include="..\sources\Services\Controllers\MultiChannelAdapter.h" />
     <ClInclude Include="..\sources\Services\Time\TimeService.h" />
     <ClInclude Include="..\sources\System\Console\n_assert.h" />
+    <ClInclude Include="..\sources\System\Process\SysMutex.h" />
     <ClInclude Include="..\sources\Resources\resource.h" />
   </ItemGroup>
   <ItemGroup>
