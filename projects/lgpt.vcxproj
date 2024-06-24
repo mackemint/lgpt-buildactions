@@ -391,6 +391,7 @@
     <ClCompile Include="..\sources\Services\Controllers\MultiChannelAdapter.cpp" />
     <ClCompile Include="..\sources\Services\Time\TimeService.cpp" />
     <ClCompile Include="..\sources\System\Console\n_assert.cpp" />
+    <ClCompile Include="..\sources\System\Console\Logger.cpp" />
     <ClCompile Include="..\sources\System\Process\SysMutex.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -530,6 +531,7 @@
     <ClInclude Include="..\sources\Services\Controllers\MultiChannelAdapter.h" />
     <ClInclude Include="..\sources\Services\Time\TimeService.h" />
     <ClInclude Include="..\sources\System\Console\n_assert.h" />
+    <ClInclude Include="..\sources\System\Console\Logger.h" />
     <ClInclude Include="..\sources\System\Process\SysMutex.h" />
     <ClInclude Include="..\sources\Resources\resource.h" />
   </ItemGroup>
