@@ -71,9 +71,10 @@ jobs:
           cd projects
           make PLATFORM=PSP
 
-
       - name: Package artifacts
-        run: ./resources/packaging/lgpt_package.sh
+        run: |
+          cd projects
+          ./resources/packaging/lgpt_package.sh
 
       - name: Upload artifacts
         uses: softprops/action-gh-release@v2
