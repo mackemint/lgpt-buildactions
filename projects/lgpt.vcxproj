@@ -314,6 +314,7 @@
     <ClCompile Include="..\sources\Application\utils\fixed.cpp" />
     <ClCompile Include="..\sources\Application\utils\HexBuffers.cpp" />
     <ClCompile Include="..\sources\Application\Utils\wildcard.cpp" />
+    <ClCompile Include="..\sources\Application\Utils\compat.cpp" />
     <ClCompile Include="..\sources\Application\Player\Player.cpp" />
     <ClCompile Include="..\sources\Application\Player\PlayerChannel.cpp" />
     <ClCompile Include="..\sources\Application\Player\PlayerMixer.cpp" />
