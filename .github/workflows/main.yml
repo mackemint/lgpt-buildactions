@@ -83,23 +83,15 @@ jobs:
           cd projects
           make PLATFORM=PSP
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: |
-            ./projects/lgpt*.*exe
-            ./projects/buildPSP/EBOOT.PBP
-
       - name: Package build
         run: |
             cd projects
             ./resources/packaging/lgpt_package.sh
     
-      - name: Upload artifacts
+      - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: release-${{ github.sha }}
           files: ./projects/*.zip
 
