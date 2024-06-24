@@ -378,7 +378,7 @@
     <ClCompile Include="..\sources\Services\Midi\MidiOutDevice.cpp" />
     <ClCompile Include="..\sources\Services\Midi\MidiService.cpp" />
     <ClCompile Include="..\sources\Services\Midi\MidiChannel.cpp" />
-    <ClCompile Include="..\sources\Services\Midi\RTMidiInMerger.cpp" />
+    <ClCompile Include="..\sources\Services\Midi\MidiInMerger.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ButtonControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\Channel.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ControllableVariable.cpp" />
@@ -517,7 +517,7 @@
     <ClInclude Include="..\sources\Services\Midi\MidiOutDevice.h" />
     <ClInclude Include="..\sources\Services\Midi\MidiService.h" />
     <ClInclude Include="..\sources\Services\Midi\MidiChannel.h" />
-    <ClInclude Include="..\sources\Services\Midi\RTMidiInMerger.h" />
+    <ClInclude Include="..\sources\Services\Midi\MidiInMerger.h" />
     <ClInclude Include="..\sources\Services\Controllers\ButtonControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\Channel.h" />
     <ClInclude Include="..\sources\Services\Controllers\ControllableVariable.h" />
