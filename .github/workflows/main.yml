@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-artifacts
-          path: ./*/*.exe
+          path: ./projects/lgpt*.*exe
 
   build:
     runs-on: ubuntu-latest
@@ -81,7 +81,9 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: ./projects/*.*exe
+          path: |
+            ./projects/lgpt*.*exe
+            ./projects/buildPSP/EBOOT.PBP
 
   deploy:
     runs-on: ubuntu-latest
@@ -110,7 +112,7 @@ jobs:
       - name: Upload artifacts
         uses: softprops/action-gh-release@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: autobuild-${{ github.sha }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          tag_name: release-${{ github.sha }}
           files: ./projects/*.zip
 
