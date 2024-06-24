@@ -253,6 +253,7 @@
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\SDLEventManager.cpp" />
     <ClCompile Include="..\sources\Adapters\Sdl\Gui\SDLGUIWindowImp.cpp" />
     <ClCompile Include="..\sources\Adapters\W32\Timer\W32Timer.cpp" />
+    <ClCompile Include="..\sources\System\Errors\Result.cpp" />
     <ClCompile Include="..\sources\System\FileSystem\FileSystem.cpp" />
     <ClCompile Include="..\sources\System\io\Status.cpp" />
     <ClCompile Include="..\sources\System\Timer\Timer.cpp" />
@@ -400,6 +401,7 @@
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\SDLEventManager.h" />
     <ClInclude Include="..\sources\Adapters\Sdl\Gui\SDLGUIWindowImp.h" />
     <ClInclude Include="..\sources\Adapters\W32\Timer\W32Timer.h" />
+    <ClInclude Include="..\sources\System\Errors\Result.h" />
     <ClInclude Include="..\sources\System\FileSystem\FileSystem.h" />
     <ClInclude Include="..\sources\System\System\System.h" />
     <ClInclude Include="..\sources\System\Process\Process.h" />
