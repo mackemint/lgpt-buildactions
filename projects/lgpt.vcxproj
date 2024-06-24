@@ -346,6 +346,7 @@
     <ClCompile Include="..\sources\UIFramework\BasicDatas\GUIRect.cpp" />
     <ClCompile Include="..\sources\UIFramework\Interfaces\I_GUIWindowImp.cpp" />
     <ClCompile Include="..\sources\UIFramework\SimpleBaseClasses\GUIWindow.cpp" />
+    <ClCompile Include="..\sources\UIFramework\SimpleBaseClasses\EventManager.cpp" />
     <ClCompile Include="..\sources\Externals\TinyXML\Tiny2NosStub.cpp" />
     <ClCompile Include="..\sources\Externals\TinyXML\tinystr.cpp" />
     <ClCompile Include="..\sources\Externals\TinyXML\tinyxml.cpp" />
@@ -375,12 +376,14 @@
     <ClCompile Include="..\sources\Services\Midi\MidiInDevice.cpp" />
     <ClCompile Include="..\sources\Services\Midi\MidiOutDevice.cpp" />
     <ClCompile Include="..\sources\Services\Midi\MidiService.cpp" />
+    <ClCompile Include="..\sources\Services\Midi\MidiChannel.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ButtonControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\Channel.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ControllableVariable.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ControllerService.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\ControlNode.cpp" />
+    <ClCompile Include="..\sources\Services\Controllers\HatControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\JoystickControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\KeyboardControllerSource.cpp" />
     <ClCompile Include="..\sources\Services\Controllers\MultiChannelAdapter.cpp" />
@@ -480,6 +483,7 @@
     <ClInclude Include="..\sources\Application\Mixer\MixBus.h" />
     <ClInclude Include="..\sources\Application\Mixer\MixerService.h" />
     <ClInclude Include="..\sources\UIFramework\Interfaces\I_GUIGraphics.h" />
+    <ClInclude Include="..\sources\UIFramework\SimpleBaseClasses\EventManager.h" />
     <ClInclude Include="..\sources\UIFramework\SimpleBaseClasses\GUIWindow.h" />
     <ClInclude Include="..\sources\Externals\RTAudio\RtAudio.h" />
     <ClInclude Include="..\sources\Externals\RTAudio\RtError.h" />
@@ -508,12 +512,14 @@
     <ClInclude Include="..\sources\Services\Midi\MidiInDevice.h" />
     <ClInclude Include="..\sources\Services\Midi\MidiOutDevice.h" />
     <ClInclude Include="..\sources\Services\Midi\MidiService.h" />
+    <ClInclude Include="..\sources\Services\Midi\MidiChannel.h" />
     <ClInclude Include="..\sources\Services\Controllers\ButtonControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\Channel.h" />
     <ClInclude Include="..\sources\Services\Controllers\ControllableVariable.h" />
     <ClInclude Include="..\sources\Services\Controllers\ControllerService.h" />
     <ClInclude Include="..\sources\Services\Controllers\ControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\ControlNode.h" />
+    <ClInclude Include="..\sources\Services\Controllers\HatControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\JoystickControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\KeyboardControllerSource.h" />
     <ClInclude Include="..\sources\Services\Controllers\MultiChannelAdapter.h" />
