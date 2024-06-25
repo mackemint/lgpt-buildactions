@@ -5,6 +5,14 @@ on: [push, pull_request]
 #   workflow_dispatch:
 
 jobs:
+
+  prepare-artifacts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create build artifacts directory
+        run: mkdir -p ${{ github.workspace }}/build-artifacts/
+
   build-windows:
     runs-on: windows-latest
 
@@ -29,9 +37,6 @@ jobs:
           cd projects
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
           msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS"
-
-      - run: mkdir -p ${{ github.workspace }}/artifacts/
-        shell: bash
 
       - name: Cache build artifacts
         id: cache-artifacts
@@ -85,8 +90,6 @@ jobs:
         run: |
           cd projects
           make PLATFORM=PSP
-      
-      - run: mkdir -p ${{ github.workspace }}/artifacts/
 
       - name: Cache build artifacts
         id: cache-artifacts
@@ -108,9 +111,9 @@ jobs:
             
       - name: Move build artifacts
         run: |
-          mv ${{ github.workspace }}/artifacts/*exe ./projects/
-          mv ${{ github.workspace }}/artifacts/*PBP ./projects/
+          mv ${{ github.workspace }}/artifacts/* ./projects/
           cd projects
+          ll
           mv lgpt.exe lgpt-W32.exe
 
       - name: Package build
