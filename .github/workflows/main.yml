@@ -30,6 +30,9 @@ jobs:
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
           msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS"
 
+      - run: mkdir -p ../build-artifacts
+        shell: bash
+
       - name: Cache build artifacts
         id: cache-artifacts
         uses: actions/cache@v2
@@ -82,6 +85,8 @@ jobs:
         run: |
           cd projects
           make PLATFORM=PSP
+      
+      - run: mkdir -p ../build-artifacts
 
       - name: Cache build artifacts
         id: cache-artifacts
@@ -91,9 +96,7 @@ jobs:
           key: build-${{ github.sha }}
   
       - name: Copy build artifacts
-        run: |
-          mkdir -p ../build-artifacts
-          find . \( -iname "*.*exe" -o -iname "*.pbp" \) -print0 | xargs -0 -I {} cp {} ../build-artifacts/
+        run: find . \( -iname "*.*exe" -o -iname "*.pbp" \) -print0 | xargs -0 -I {} cp {} ../build-artifacts/
  
   package:
     runs-on: ubuntu-latest
