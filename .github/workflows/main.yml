@@ -32,9 +32,8 @@ jobs:
      
       - name: Copy build artifacts
         shell: bash
-        run: |
-          mkdir -p ../build-artifacts
-          cp ./projects/bin/lgpt*.*exe ../build-artifacts/
+        run: find . \( -iname "*.*exe" \) -print0 | xargs -0 -I {} cp {} ../build-artifacts/
+
 
   build:
     runs-on: ubuntu-latest
@@ -79,8 +78,8 @@ jobs:
 
       - name: Copy build artifacts
         run: |
-          cp ./projects/bin/lgpt*.*exe ../build-artifacts/
-          cp ./projects/bin/*.PBP ../build-artifacts/
+          mkdir -p ../build-artifacts
+          find . \( -iname "*.*exe" -o -iname "*.pbp" \) -print0 | xargs -0 -I {} cp {} ../build-artifacts/
  
   package:
     runs-on: ubuntu-latest
