@@ -41,8 +41,7 @@ jobs:
       - name: Package build
         shell: bash
         run: |
-          find -iname "*.exe"
-          find . -type f -iname "*.exe" -execdir mv {} lgpt-W32.exe \;
+          mv ./bin/lgpt.exe  projects/lgpt-W32.exe
           cd projects
           ./resources/packaging/lgpt_package.sh
 
