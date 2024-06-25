@@ -29,20 +29,12 @@ jobs:
           cd projects
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
           msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS"
-
-      - name: Package windows
-        shell: bash
-        run: |
-          mv bin/lgpt.exe projects/lgpt-W32.exe
-          cd projects
-          ./resources/packaging/lgpt_package.sh
-  
-      - name: Upload win release
-        uses: softprops/action-gh-release@v2
+     
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
-          tag_name: release-${{ github.sha }}
-          files: ./projects/*.zip
+          name: windows-artifacts
+          path: ./*/lgpt*.*exe
 
   build:
     runs-on: ubuntu-latest
@@ -84,7 +76,18 @@ jobs:
         run: |
           cd projects
           make PLATFORM=PSP
-
+          
+      - name: Download windows artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: windows-artifacts
+          path: ./projects
+          
+      - name: move Windows build
+        run: |
+            cd projects
+            mv lgpt.exe lgpt-W32.exe
+          
       - name: Package build
         run: |
             cd projects
