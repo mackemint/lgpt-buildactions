@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Install DirectX SDK and Visual Studio 2019 Build Tools
-        run: choco install -y directx-sdk visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
+        run: choco install -y zip directx-sdk visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
         shell: powershell
 
       - name: Set DirectX SDK environment variable
@@ -41,7 +41,6 @@ jobs:
       - name: Package build
         shell: bash
         run: |
-          sudo apt install -y zip
           cd projects
           ll
           mv bin/lgpt.exe ./lgpt-W32.exe  
