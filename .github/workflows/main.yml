@@ -30,19 +30,19 @@ jobs:
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
           msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS"
 
-      - run: mkdir -p ../build-artifacts
+      - run: mkdir -p ${{ github.workspace }}/artifacts/
         shell: bash
 
       - name: Cache build artifacts
         id: cache-artifacts
         uses: actions/cache@v2
         with:
-          path: ../build-artifacts/
+          path: ${{ github.workspace }}/artifacts/
           key: build-${{ github.sha }}
           
       - name: Copy build artifacts
         shell: bash
-        run: find . \( -iname "*.*exe" \) -print0 | xargs -0 -I {} cp {} ../build-artifacts/
+        run: find . \( -iname "*.*exe" \) -print0 | xargs -0 -I {} cp {} ${{ github.workspace }}/artifacts/
 
 
   build:
@@ -86,17 +86,17 @@ jobs:
           cd projects
           make PLATFORM=PSP
       
-      - run: mkdir -p ../build-artifacts
+      - run: mkdir -p ${{ github.workspace }}/artifacts/
 
       - name: Cache build artifacts
         id: cache-artifacts
         uses: actions/cache@v2
         with:
-          path: ../build-artifacts/
+          path: ${{ github.workspace }}/artifacts/
           key: build-${{ github.sha }}
   
       - name: Copy build artifacts
-        run: find . \( -iname "*.*exe" -o -iname "*.pbp" \) -print0 | xargs -0 -I {} cp {} ../build-artifacts/
+        run: find . \( -iname "*.*exe" -o -iname "*.pbp" \) -print0 | xargs -0 -I {} cp {} ${{ github.workspace }}/artifacts/
  
   package:
     runs-on: ubuntu-latest
@@ -108,8 +108,8 @@ jobs:
             
       - name: Move build artifacts
         run: |
-          mv ../build-artifacts/*exe ./projects/
-          mv ../build-artifacts/*PBP ./projects/
+          mv ${{ github.workspace }}/artifacts/*exe ./projects/
+          mv ${{ github.workspace }}/artifacts/*PBP ./projects/
           cd projects
           mv lgpt.exe lgpt-W32.exe
 
