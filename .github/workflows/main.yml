@@ -31,9 +31,10 @@ jobs:
           msbuild lgpt-VCE2019.sln /p:Configuration=Release /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS"
      
       - name: Copy build artifacts
+        shell: bash
         run: |
-          mkdir -p ../build-artifacts/windows
-          cp ./projects/bin/lgpt*.*exe ../build-artifacts/windows/
+          mkdir -p ../build-artifacts
+          cp ./projects/bin/lgpt*.*exe ../build-artifacts/
 
   build:
     runs-on: ubuntu-latest
@@ -75,18 +76,31 @@ jobs:
         run: |
           cd projects
           make PLATFORM=PSP
-          
+
+      - name: Copy build artifacts
+        run: |
+          cp ./projects/bin/lgpt*.*exe ../build-artifacts/
+          cp ./projects/bin/*.PBP ../build-artifacts/
+ 
+  package:
+    runs-on: ubuntu-latest
+    needs: [build-windows, build]
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+            
       - name: Move build artifacts
         run: |
-          mv ../build-artifacts/windows/*.exe ./projects/
+          mv ../build-artifacts/*exe ./projects/
+          mv ../build-artifacts/*PBP ./projects/
           cd projects
           mv lgpt.exe lgpt-W32.exe
-          
+
       - name: Package build
         run: |
             cd projects
             ./resources/packaging/lgpt_package.sh
-    
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
