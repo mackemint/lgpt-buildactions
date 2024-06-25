@@ -33,7 +33,9 @@ jobs:
       - name: Package windows
         shell: bash
         run: |
-            ./projects/resources/packaging/lgpt_package.sh
+          mv bin/lgpt.exe projects/lgpt-W32.exe
+          cd projects
+          ./resources/packaging/lgpt_package.sh
   
       - name: Upload win release
         uses: softprops/action-gh-release@v2
