@@ -42,7 +42,6 @@ jobs:
         shell: bash
         run: |
           cd projects
-          ll
           mv bin/lgpt.exe ./lgpt-W32.exe  
           ./resources/packaging/lgpt_package.sh
 
