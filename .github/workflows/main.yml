@@ -27,18 +27,13 @@ jobs:
           [System.Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
         
       - name: Install DirectX SDK and Visual Studio 2019 Build Tools
-        run: choco install -y zip visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
+        run: choco install -y directx-sdk zip visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
         shell: powershell
-
-      - name: Download DirectX SDK
-        run: |
-          Invoke-WebRequest -Uri https://download.microsoft.com/download/8/1/3/813109e5-09d3-4f9e-8a7b-b3f3344f10b5/DirectX_SDK_Mar2008.exe -OutFile $env:GITHUB_WORKSPACE\DirectX_SDK_Mar2008.exe
   
-      - name: Install DirectX SDK
+      - name: Set DirectX SDK environment variable
         run: |
-          Start-Process -FilePath $env:GITHUB_WORKSPACE\DirectX_SDK_Mar2008.exe -ArgumentList "/Q /T:$env:GITHUB_WORKSPACE\DirectXSDK" -NoNewWindow -Wait
-          $env:Path += ";$env:GITHUB_WORKSPACE\DirectXSDK"
-          [System.Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
+          '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
+        shell: powershell
 
       - name: Setup MSBuild path
         uses: microsoft/setup-msbuild@v1
