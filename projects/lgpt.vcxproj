@@ -99,12 +99,16 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lgptd</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\vboxuser\Documents\SDL-1.2-release-1.2.13\include;$(IncludePath)</IncludePath>
+    <IncludePath>Y:\windeps\SDL2-2.30.4\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>Y:\windeps\SDL2-2.30.4\include;$(IncludePath)</IncludePath>
+    <LibraryPath>Y:\windeps\SDL2-2.30.4\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../sources/Externals;../sources/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Y:\windeps\SDL2-2.30.4\include;../sources/Externals;../sources/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;__WINDOWS_DS__;__WINDOWS_ASIO__;_CRT_SECURE_NO_WARNINGS;__WINDOWS_MM__;CPP_MEMORY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -114,12 +118,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>sdlmain.lib;sdl.lib;winmm.lib;dsound.lib;SDL_image.lib;msvcrt.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl2main.lib;sdl2.lib;winmm.lib;dsound.lib;SDL2_image.lib;msvcrt.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)lgptd.exe</OutputFile>
-      <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>Y:\windeps\SDL2-2.30.4\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)lgpt.pdb</ProgramDatabaseFile>
@@ -145,9 +151,9 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>sdlmain-release.lib;sdl-release.lib;winmm.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;winmm.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)lgpt-W32.exe</OutputFile>
-      <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs/WSDL2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -171,9 +177,9 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>sdlmain.lib;sdl.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl2main.lib;sdl2.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)lgpt-renderer.exe</OutputFile>
-      <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs/WSDL2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -197,9 +203,9 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>sdlmain.lib;sdl.lib;winmm.lib;SDL_image.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdlmain2.lib;sdl2.lib;winmm.lib;SDL2_image.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)lgpt_demo.exe</OutputFile>
-      <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs/WSDL2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -224,9 +230,9 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>sdlmain-release.lib;sdl-release.lib;winmm.lib;dsound.lib;sdl_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl2main.lib;sdl2.lib;winmm.lib;dsound.lib;sdl2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)lgpt_demo.exe</OutputFile>
-      <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../libs/WSDL2;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>

@@ -9,7 +9,7 @@
 ##### PSP: Compile under Ubuntu
 	Required libs:
 		sudo apt install -y build-essential cmake pkgconf \
-		libusb-0.1 libgpgme11 libarchive-tools fakeroot
+		libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
 	Dev kit:
 		https://github.com/djdiskmachine/pspdev
 	using nano ~/.bashrc, add

@@ -97,7 +97,7 @@ jobs:
       - name: Install required libraries
         run: |
           sudo apt update
-          sudo apt install -y build-essential cmake pkgconf libusb-0.1 libgpgme11 libarchive-tools fakeroot
+          sudo apt install -y build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot
 
       - name: Set up PSP dev kit
         run: |
