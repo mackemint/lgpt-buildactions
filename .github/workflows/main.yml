@@ -39,21 +39,21 @@ jobs:
           Start-Process -FilePath $env:GITHUB_WORKSPACE\DirectX_SDK_Mar2008.exe -ArgumentList "/Q /T:$env:GITHUB_WORKSPACE\DirectXSDK" -NoNewWindow -Wait
           $env:Path += ";$env:GITHUB_WORKSPACE\DirectXSDK"
           [System.Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
-      
+
       - name: Setup MSBuild path
         uses: microsoft/setup-msbuild@v1
 
       - name: Build solution
+        working-directory: projects
         run: |
-          cd projects
           & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
           msbuild lgpt-VCE2019.sln /p:Configuration=Debug /p:Platform=Win32 /p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS /D _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES"
       
       - name: Package build
         shell: bash
+        working-directory: projects
         run: |
           mv ./bin/lgpt.exe  projects/lgpt-W32.exe
-          cd projects
           ./resources/packaging/lgpt_package.sh
 
       - name: Upload win release
@@ -63,10 +63,8 @@ jobs:
           tag_name: release-${{ github.sha }}
           files: ./projects/*.zip
 
-  build:
+  build-deb:
     runs-on: ubuntu-latest
-    env:
-      PSPDEV: ${{ github.workspace }}/pspdev
 
     steps:
       - name: Checkout repository
@@ -75,39 +73,15 @@ jobs:
       - name: Install required libraries
         run: |
           sudo dpkg --add-architecture i386
-          sudo apt update
-          sudo apt install -y gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386 build-essential cmake pkgconf libusb-0.1-4 libgpgme11 libarchive-tools fakeroot libncurses-dev
+          sudo apt install -y make gcc-multilib g++-multilib libsdl1.2-dev:i386 libasound2-plugins:i386 libjack-dev:i386
 
-      - name: Set up PSP dev kit
-        run: |
-          echo "$PSPDEV/bin" >> $GITHUB_PATH 
-          git clone https://github.com/djdiskmachine/pspdev
-
-      - name: Install Miyoo Mini toolchain
-        run: |
-          wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
-          mkdir /opt/miyoomini-toolchain
-          tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/miyoomini-toolchain  --strip-components=1
-
-      - name: Build Miyoo Mini
-        run: |
-          cd projects
-          make PLATFORM=MIYOO
-          
       - name: Build DEB
-        run: |
-          cd projects
-          make PLATFORM=DEB
-
-      - name: Build PSP
-        run: |
-          cd projects
-          make PLATFORM=PSP
+        working-directory: projects
+        run: make PLATFORM=DEB
 
       - name: Package build
-        run: |
-            cd projects
-            ./resources/packaging/lgpt_package.sh
+        working-directory: projects
+        run: ./resources/packaging/lgpt_package.sh
 
       - name: Upload build release
         uses: softprops/action-gh-release@v2
@@ -116,3 +90,67 @@ jobs:
           tag_name: release-${{ github.sha }}
           files: ./projects/*.zip
 
+  build-psp:
+    runs-on: ubuntu-latest
+    env:
+      PSPDEV: ${{ github.workspace }}/pspdev
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install required libraries
+        run: sudo apt install -y build-essential cmake pkgconf libusb-0.1 libgpgme11 libarchive-tools fakeroot
+
+      - name: Set up PSP dev kit
+        run: |
+          echo "$PSPDEV/bin" >> $GITHUB_PATH 
+          git clone https://github.com/djdiskmachine/pspdev
+
+      - name: Build PSP
+        working-directory: projects
+        run: make PLATFORM=PSP
+
+      - name: Package build
+        working-directory: projects
+        run: ./resources/packaging/lgpt_package.sh
+
+      - name: Upload build release
+        uses: softprops/action-gh-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: release-${{ github.sha }}
+          files: ./projects/*.zip
+
+  build-miyoo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install required libraries
+        run: sudo apt install libncurses-dev
+
+      - name: Install Miyoo Mini toolchain
+        run: |
+          wget -O /tmp/miyoomini-toolchain.tar.xz https://github.com/djdiskmachine/miyoomini-toolchain-buildroot/releases/download/1.0.0/miyoomini-toolchain.tar.xz
+          mkdir /opt/miyoomini-toolchain
+          tar -xvf /tmp/miyoomini-toolchain.tar.xz -C /opt/miyoomini-toolchain  --strip-components=1
+
+      - name: Build Miyoo Mini
+        working-directory: projects
+        run: |
+          make PLATFORM=MIYOO
+
+      - name: Package build
+        working-directory: projects
+        run: |
+            ./resources/packaging/lgpt_package.sh
+
+      - name: Upload build release
+        uses: softprops/action-gh-release@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: release-${{ github.sha }}
+          files: ./projects/*.zip
