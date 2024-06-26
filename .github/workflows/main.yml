@@ -19,9 +19,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Download SDL 1.2
+        run: |
+          Invoke-WebRequest -Uri https://www.libsdl.org/release/SDL-1.2.15.zip -OutFile $env:GITHUB_WORKSPACE\SDL-1.2.15.zip
+          Expand-Archive -Path $env:GITHUB_WORKSPACE\SDL-1.2.15.zip -DestinationPath $env:GITHUB_WORKSPACE\SDL-1.2.15
+
+      - name: Set up SDL environment variables
+        run: |
+          $sdlPath = "$env:GITHUB_WORKSPACE\SDL-1.2.15"
+          [System.Environment]::SetEnvironmentVariable("SDL_INCLUDE_DIR", "$sdlPath\include", [System.EnvironmentVariableTarget]::Process)
+          [System.Environment]::SetEnvironmentVariable("SDL_LIB_DIR", "$sdlPath\lib", [System.EnvironmentVariableTarget]::Process)
+          $env:Path += ";$sdlPath\lib"
+          [System.Environment]::SetEnvironmentVariable("Path", $env:Path, [System.EnvironmentVariableTarget]::Machine)
         
       - name: Install DirectX SDK and Visual Studio 2019 Build Tools
-        run: choco install -y zip sdl directx-sdk visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
+        run: choco install -y zip directx-sdk visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools"
         shell: powershell
 
       - name: Set DirectX SDK environment variable
