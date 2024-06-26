@@ -146,7 +146,7 @@
     <Link>
       <AdditionalOptions>/fixed:no %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>sdlmain-release.lib;sdl-release.lib;winmm.lib;dsound.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)lgpt.exe</OutputFile>
+      <OutputFile>$(OutDir)lgpt-W32.exe</OutputFile>
       <AdditionalLibraryDirectories>../libs/WSDL;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
