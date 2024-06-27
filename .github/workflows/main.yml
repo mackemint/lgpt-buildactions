@@ -51,11 +51,17 @@ jobs:
           mv ./bin/lgpt.exe  projects/lgpt-W32.exe
           ./resources/packaging/lgpt_package.sh
 
+      - name: Extract Git tag name
+        run: |
+          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+    
       - name: Upload win release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ github.ref }}
+          tag_name: $GITHUB_REF
           files: ./projects/*.zip
 
   build-deb:
@@ -79,11 +85,17 @@ jobs:
         working-directory: projects
         run: ./resources/packaging/lgpt_package.sh
 
+      - name: Extract Git tag name
+        run: |
+          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ github.ref }}
+          tag_name: $GITHUB_REF
           files: ./projects/*.zip
 
   build-psp:
@@ -113,11 +125,17 @@ jobs:
         working-directory: projects
         run: ./resources/packaging/lgpt_package.sh
 
+      - name: Extract Git tag name
+        run: |
+          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ github.ref }}
+          tag_name: $GITHUB_REF
           files: ./projects/*.zip
 
   build-miyoo:
@@ -143,9 +161,15 @@ jobs:
         run: |
             ./resources/packaging/lgpt_package.sh
 
+      - name: Extract Git tag name
+        run: |
+          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+        env:
+          GITHUB_REF: ${{ github.ref }}
+          
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ github.ref }}
+          tag_name: $GITHUB_REF
           files: ./projects/*.zip
