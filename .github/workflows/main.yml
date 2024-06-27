@@ -50,14 +50,12 @@ jobs:
         run: |
           mv ./bin/lgpt.exe  projects/lgpt-W32.exe
           ./resources/packaging/lgpt_package.sh
-          filename=$(basename ./*.zip .zip)
-          tag_name=$(echo $filename | sed 's/.\{4\}$//')
 
       - name: Upload win release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.package_build.outputs.tag_name }}
+          tag_name: ${{ github.ref }}
           files: ./projects/*.zip
 
   build-deb:
@@ -80,14 +78,12 @@ jobs:
       - name: Package build
         working-directory: projects
         run: ./resources/packaging/lgpt_package.sh
-          filename=$(basename ./*.zip .zip)
-          tag_name=$(echo $filename | sed 's/.\{4\}$//')
 
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.package_build.outputs.tag_name }}
+          tag_name: ${{ github.ref }}
           files: ./projects/*.zip
 
   build-psp:
@@ -116,14 +112,12 @@ jobs:
       - name: Package build
         working-directory: projects
         run: ./resources/packaging/lgpt_package.sh
-          filename=$(basename ./*.zip .zip)
-          tag_name=$(echo $filename | sed 's/.\{4\}$//')
 
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.package_build.outputs.tag_name }}
+          tag_name: ${{ github.ref }}
           files: ./projects/*.zip
 
   build-miyoo:
@@ -148,12 +142,10 @@ jobs:
         working-directory: projects
         run: |
             ./resources/packaging/lgpt_package.sh
-            filename=$(basename ./*.zip .zip)
-            tag_name=$(echo $filename | sed 's/.\{4\}$//')
 
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: ${{ steps.package_build.outputs.tag_name }}
+          tag_name: ${{ github.ref }}
           files: ./projects/*.zip
