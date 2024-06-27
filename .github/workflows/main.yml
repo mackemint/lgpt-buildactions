@@ -52,16 +52,17 @@ jobs:
           ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
+        id: extract_tag
         run: |
-          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+          echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
         env:
           GITHUB_REF: ${{ github.ref }}
-    
+
       - name: Upload win release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: $GITHUB_REF
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
   build-deb:
@@ -86,8 +87,9 @@ jobs:
         run: ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
+        id: extract_tag
         run: |
-          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+          echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
         env:
           GITHUB_REF: ${{ github.ref }}
 
@@ -95,7 +97,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: $GITHUB_REF
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
   build-psp:
@@ -126,8 +128,9 @@ jobs:
         run: ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
+        id: extract_tag
         run: |
-          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+          echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
         env:
           GITHUB_REF: ${{ github.ref }}
 
@@ -135,7 +138,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: $GITHUB_REF
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
 
   build-miyoo:
@@ -162,14 +165,15 @@ jobs:
             ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
+        id: extract_tag
         run: |
-          echo "Tag name without prefix: ${GITHUB_REF#refs/tags/}"
+          echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
         env:
           GITHUB_REF: ${{ github.ref }}
-          
+
       - name: Upload build release
         uses: softprops/action-gh-release@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag_name: $GITHUB_REF
+          tag_name: ${{ steps.extract_tag.outputs.tag_name }}
           files: ./projects/*.zip
