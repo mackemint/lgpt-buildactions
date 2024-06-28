@@ -31,7 +31,7 @@ jobs:
       - name: Install Visual Studio 2008 Express
         run: |
           $driveLetter = (Get-DiskImage -ImagePath "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso" | Get-Volume).DriveLetter
-          & "${driveLetter}:\VCExpress\setup.exe" /S
+          Start-Process -FilePath "${driveLetter}:\VCExpress\setup.exe" -ArgumentList '/q', '/norestart' -Wait
         shell: pwsh
 
       - name: Set environment variables
@@ -44,7 +44,7 @@ jobs:
   
       - name: Build Solution
         run: |
-          Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\" -Recurse
+          Get-ChildItem "C:\Program Files (x86)" -Recurse
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" /Build "Release"
         shell: pwsh
       
