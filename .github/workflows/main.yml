@@ -43,6 +43,12 @@ jobs:
           [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Process)
           '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
   
+          # Set INCLUDE to include Windows SDK libraries and headers
+          $sdkIncludePath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include"  # Adjust the version as per your SDK installation
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$sdkIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Process)
+          $sdkLibPath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib"  # Adjust the version as per your SDK installation
+          [System.Environment]::SetEnvironmentVariable('LIB', "$sdkLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Process)
+
           # Display environment variables for verification
           Get-ChildItem Env:
         shell: pwsh
