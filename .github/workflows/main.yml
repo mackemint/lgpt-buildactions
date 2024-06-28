@@ -17,6 +17,18 @@ jobs:
       #   run: choco install -y directx-sdk zip
       #   shell: powershell
 
+      - name: Download AutoIt
+        run: |
+          Invoke-WebRequest -Uri "https://www.autoitscript.com/cgi-bin/getfile.pl?autoit3/autoit-v3-setup.exe" -OutFile "$env:TEMP\autoit-v3-setup.exe"
+          Start-Process -FilePath "$env:TEMP\autoit-v3-setup.exe" -ArgumentList "/S" -Wait
+          Invoke-WebRequest -Uri "https://example.com/path/to/install_vcexpress.au3" -OutFile "$env:GITHUB_WORKSPACE\install_vcexpress.au3"
+
+      - name: Run AutoIt Script
+        run: |
+          $driveLetter = (Get-DiskImage -ImagePath "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso" | Get-Volume).DriveLetter
+          Start-Process -FilePath "C:\Program Files (x86)\AutoIt3\AutoIt3.exe" -ArgumentList "$env:GITHUB_WORKSPACE\install_vcexpress.au3" -Wait
+        shell: pwsh
+
       - name: Download ISO
         run: |
           Invoke-WebRequest -Uri "http://download.microsoft.com/download/8/B/5/8B5804AD-4990-40D0-A6AA-CE894CBBB3DC/VS2008ExpressENUX1397868.iso" -OutFile "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso"
