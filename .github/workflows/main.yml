@@ -20,7 +20,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path $destination | Out-Null
           Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\VCE9.zip"
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
-          Get-ChildItem "C:\Program Files\Microsoft SDKs" -Recurse
+          Get-ChildItem "C:\Program Files\Microsoft SDKs\Windows" -Recurse
         shell: pwsh
 
       - name: Install build deps
