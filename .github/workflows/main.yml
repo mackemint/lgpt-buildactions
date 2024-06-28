@@ -13,14 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install DirectX SDK and Visual Studio 2019 Build Tools
-        run: choco install -y directx-sdk zip
-        shell: powershell
-  
-      - name: Set DirectX SDK environment variable
-        run: |
-          '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
-        shell: powershell
+      # - name: Install build deps
+      #   run: choco install -y directx-sdk zip
+      #   shell: powershell
 
       - name: Download ISO
         run: |
@@ -42,13 +37,15 @@ jobs:
       - name: Set environment variables
         run: |
           $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
-          $env:INCLUDE = "$env:INCLUDE;$dxsdkPath\Include"
-          $env:LIB = "$env:LIB;$dxsdkPath\Lib\x64"
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$env:INCLUDE;$dxsdkPath\Include", [System.EnvironmentVariableTarget]::Process)
+          [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Process)
+          '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
         shell: pwsh
   
       - name: Build Solution
         run: |
-          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" "lgpt.sln" /Build "Release"
+          Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\" -Recurse
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" /Build "Release"
         shell: pwsh
       
       - name: Package build
