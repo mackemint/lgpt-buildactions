@@ -48,9 +48,9 @@ jobs:
           [System.Environment]::SetEnvironmentVariable('LIB', "$vcLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Process)
   
           # Set INCLUDE to include Windows SDK libraries and headers
-          $sdkIncludePath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v6.0A\Include"  # Adjust the version as per your SDK installation
+          $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
           [System.Environment]::SetEnvironmentVariable('INCLUDE', "$sdkIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Process)
-          $sdkLibPath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v6.0A\Lib"  # Adjust the version as per your SDK installation
+          $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
           [System.Environment]::SetEnvironmentVariable('LIB', "$sdkLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Process)
           
           $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
