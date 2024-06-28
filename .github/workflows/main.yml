@@ -33,21 +33,23 @@ jobs:
           Write-Host "ISO mounted to drive letter $driveLetter"
         shell: pwsh
   
-      - name: Run Setup
+      - name: Install Visual Studio 2008 Express
         run: |
           $driveLetter = (Get-DiskImage -ImagePath "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso" | Get-Volume).DriveLetter
-          & "$driveLetter:\VCExpress\setup.exe" /S
+          & "${driveLetter}:\VCExpress\setup.exe" /S
         shell: pwsh
 
-      - name: Setup MSBuild path
-        uses: microsoft/setup-msbuild@v1
-
-      - name: Build solution
-        working-directory: projects
+      - name: Set environment variables
         run: |
-          & "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\Tools\VsDevCmd.bat" &&
-          msbuild lgpt.sln /p:Configuration=Debug /p:Platform=Win32 
-        #/p:AdditionalOptions="/D _CRT_NON_CONFORMING_SWPRINTFS /D _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES"
+          $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
+          $env:INCLUDE = "$env:INCLUDE;$dxsdkPath\Include"
+          $env:LIB = "$env:LIB;$dxsdkPath\Lib\x64"
+        shell: pwsh
+  
+      - name: Build Solution
+        run: |
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\devenv.exe" "lgpt.sln" /Build "Release"
+        shell: pwsh
       
       - name: Package build
         shell: bash
