@@ -13,9 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # - name: Install build deps
-      #   run: choco install -y directx-sdk zip
-      #   shell: powershell
+      - name: Install build deps
+        run: choco install -y directx-sdk zip
+        shell: powershell
 
       - name: Download and Extract VCE9 release
         run: |
@@ -28,17 +28,29 @@ jobs:
 
       - name: Set environment variables
         run: |
+          # Set PATH to include Visual Studio 2008 binaries
+          $vcPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
+          [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH + ";$vcPath", [System.EnvironmentVariableTarget]::Process)
+  
+          # Set INCLUDE and LIB environment variables
+          $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
+          $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$vcIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Process)
+          [System.Environment]::SetEnvironmentVariable('LIB', "$vcLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Process)
+  
           $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
           [System.Environment]::SetEnvironmentVariable('INCLUDE', "$env:INCLUDE;$dxsdkPath\Include", [System.EnvironmentVariableTarget]::Process)
           [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Process)
           '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
-        shell: pwsh
   
+          # Display environment variables for verification
+          Get-ChildItem Env:
+        shell: pwsh
+
       - name: Build Solution
         working-directory: projects
         run: |
-          Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\" -Recurse
-          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" /Build "Release"
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
         shell: pwsh
       
       - name: Package build
