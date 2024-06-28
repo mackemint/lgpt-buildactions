@@ -14,7 +14,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install build deps
-        run: choco install -y directx-sdk zip
+        run: |
+          Get-ChildItem "CC:\Program Files (x86)\Microsoft SDKs" -Recurse
+          choco install -y directx-sdk zip
         shell: powershell
 
       - name: Download and Extract VCE9 release
@@ -38,16 +40,16 @@ jobs:
           [System.Environment]::SetEnvironmentVariable('INCLUDE', "$vcIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Process)
           [System.Environment]::SetEnvironmentVariable('LIB', "$vcLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Process)
   
-          $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
-          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$env:INCLUDE;$dxsdkPath\Include", [System.EnvironmentVariableTarget]::Process)
-          [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Process)
-          '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
-  
           # Set INCLUDE to include Windows SDK libraries and headers
           $sdkIncludePath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Include"  # Adjust the version as per your SDK installation
           [System.Environment]::SetEnvironmentVariable('INCLUDE', "$sdkIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Process)
           $sdkLibPath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib"  # Adjust the version as per your SDK installation
           [System.Environment]::SetEnvironmentVariable('LIB', "$sdkLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Process)
+          
+          $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$env:INCLUDE;$dxsdkPath\Include", [System.EnvironmentVariableTarget]::Process)
+          [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Process)
+          '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
 
           # Display environment variables for verification
           Get-ChildItem Env:
