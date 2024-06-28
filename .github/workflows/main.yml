@@ -13,9 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install build deps
-        run: choco install -y directx-sdk zip
-        shell: powershell
+      # - name: Install build deps
+      #   run: choco install -y directx-sdk zip
+      #   shell: powershell
 
       - name: Download and Extract VCE9 release
         run: |
@@ -37,7 +37,7 @@ jobs:
       - name: Build Solution
         working-directory: projects
         run: |
-          Get-ChildItem "C:\Program Files (x86)"
+          Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages"
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" /Build "Release"
         shell: pwsh
       
