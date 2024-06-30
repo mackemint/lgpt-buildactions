@@ -13,9 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
   
-      - name: Install build deps
-        run: choco install -y directx-sdk zip --no-progress --yes
-        shell: powershell
+      # - name: Install build deps
+      #   run: choco install -y directx-sdk zip --no-progress --yes
+      #   shell: powershell
 
       - name: Download and Extract VCE9 release
         run: |
@@ -55,11 +55,12 @@ jobs:
           # Set INCLUDE to include Windows SDK libraries and headers
           $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
           echo INCLUDE=$sdkIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
+
           $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
           echo LIB=$sdkLibPath";$env:LIB" >> $env:GITHUB_ENV
 
-          $env:WindowsSdkDir = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
-          echo "WindowsSdkDir set to $env:WindowsSdkDir"
+          $WindowsSdkDir = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
+          echo PATH=$env:PATH";$WindowsSdkDir" >> $env:GITHUB_ENV
 
           # Add the SDK installation directory to the PATH
           $sdkPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin"
@@ -68,8 +69,6 @@ jobs:
 
       - name: Display folders
         run: |  
-          # Display environment variables for verification
-          Get-ChildItem Env:
           $folderPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
           if (Test-Path -Path $folderPath) {
             Get-ChildItem -Path $folderPath
@@ -87,9 +86,12 @@ jobs:
             Get-ChildItem -Path $folderPath
           } else {
             Write-Output "Folder does not exist: $folderPath"
-          }
-  
+          }  
         shell: pwsh
+
+      - name: Install build deps
+        run: choco install -y directx-sdk zip --no-progress --yes
+        shell: powershell
 
       - name: Verify environment variables
         run: |
@@ -97,6 +99,8 @@ jobs:
           Write-Output "INCLUDE: $env:INCLUDE"
           Write-Output "LIB: $env:LIB"
           Write-Output "DXSDK_DIR: $env:DXSDK_DIR"
+          # Display environment variables for verification
+          Get-ChildItem Env:
         shell: pwsh
 
       - name: Build Solution
