@@ -94,12 +94,9 @@ jobs:
 
       - name: Verify environment variables
         run: |
-          Write-Output "PATH: $env:PATH"
-          Write-Output "INCLUDE: $env:INCLUDE"
-          Write-Output "LIB: $env:LIB"
-          Write-Output "DXSDK_DIR: $env:DXSDK_DIR"
-          # Display environment variables for verification
-          Get-ChildItem Env:
+          $fullPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")  # Use "Machine" for system-wide variable
+          Write-Host "Full PATH variable:"
+          Write-Host $fullPath
         shell: pwsh
 
       - name: Copy windows.h to sources/Externals/SDL
