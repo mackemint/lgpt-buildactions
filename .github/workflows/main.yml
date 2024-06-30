@@ -15,6 +15,7 @@ jobs:
 
       - name: Install build deps
         run: choco install -y directx-sdk zip
+        # windows-sdk-10-version-10.0.19041.0
         shell: powershell
 
       - name: Download and Extract VCE9 release
@@ -25,30 +26,39 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\VCE9.zip"
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
+
+      - name: Download and Extract Microsoft SDKs 
+        run: |
+          $url = "https://github.com/djdiskmachine/VCE9/releases/download/v1.0.0/Microsoft.Visual.Studio.9.0.zip"
+          $destination = "C:\Program Files\"
+          New-Item -ItemType Directory -Force -Path $destination | Out-Null
+          Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\SDK.zip"
+          Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
+        shell: pwsh
         
       - name: Set environment variables
         run: |
           # Set PATH to include Visual Studio 2008 binaries
           $vcPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
-          echo "PATH=$env:PATH;$vcPath" >> $env:GITHUB_ENV
+          [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH + ";$vcPath", [System.EnvironmentVariableTarget]::Machine)
           
           # Set INCLUDE and LIB environment variables for Visual Studio 2008
           $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
           $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
-          echo "INCLUDE=$vcIncludePath;$env:INCLUDE" >> $env:GITHUB_ENV
-          echo "LIB=$vcLibPath;$env:LIB" >> $env:GITHUB_ENV
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$vcIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Machine)
+          [System.Environment]::SetEnvironmentVariable('LIB', "$vcLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Machine)
           
           # Set INCLUDE and LIB environment variables for DirectX SDK
-          $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
-          echo "INCLUDE=$env:INCLUDE;$dxsdkPath\Include" >> $env:GITHUB_ENV
-          echo "LIB=$env:LIB;$dxsdkPath\Lib\x86" >> $env:GITHUB_ENV
-          echo "DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" >> $env:GITHUB_ENV
+          $dxsdkPath = "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)"
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$env:INCLUDE;$dxsdkPath\Include", [System.EnvironmentVariableTarget]::Machine)
+          [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Machine)
+          [System.Environment]::SetEnvironmentVariable('DXSDK_DIR', $dxsdkPath, [System.EnvironmentVariableTarget]::Machine)
           
           # Set INCLUDE and LIB environment variables for Windows SDK
           $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
           $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          echo "INCLUDE=$sdkIncludePath;$env:INCLUDE" >> $env:GITHUB_ENV
-          echo "LIB=$sdkLibPath;$env:LIB" >> $env:GITHUB_ENV
+          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$sdkIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Machine)
+          [System.Environment]::SetEnvironmentVariable('LIB', "$sdkLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Machine)
           
           # Display environment variables for verification
           Get-ChildItem Env:
