@@ -12,12 +12,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Set up MSBuild
-        uses: microsoft/setup-msbuild@v1.0.2
   
       - name: Install build deps
-        run: choco install -y directx-sdk zip visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.Windows10SDK.19041" --no-progress --yes
+        run: choco install -y directx-sdk zip --no-progress --yes
         shell: powershell
 
       - name: Download and Extract VCE9 release
@@ -29,14 +26,14 @@ jobs:
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
 
-      # - name: Download and Extract Microsoft SDKs 
-      #   run: |
-      #     $url = "https://github.com/djdiskmachine/VCE9/releases/download/v1.0.0/Microsoft.Visual.Studio.9.0.zip"
-      #     $destination = "C:\Program Files\"
-      #     New-Item -ItemType Directory -Force -Path $destination | Out-Null
-      #     Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\SDK.zip"
-      #     Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
-      #   shell: pwsh
+      - name: Download and Extract Microsoft SDKs 
+        run: |
+          $url = "https://github.com/djdiskmachine/VCE9/releases/download/v1.0.0/Microsoft.Visual.Studio.9.0.zip"
+          $destination = "C:\Program Files\"
+          New-Item -ItemType Directory -Force -Path $destination | Out-Null
+          Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\SDK.zip"
+          Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
+        shell: pwsh
         
       - name: Set environment variables
         run: |
@@ -55,11 +52,14 @@ jobs:
           echo LIB=$env:LIB";$dxsdkPath\Lib\x86" >> $env:GITHUB_ENV
           echo DXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" >> $env:GITHUB_ENV
           
-          # # Set INCLUDE to include Windows SDK libraries and headers
-          # $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          # echo INCLUDE=$sdkIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
-          # $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          # echo LIB=$sdkLibPath";$env:LIB" >> $env:GITHUB_ENV
+          # Set INCLUDE to include Windows SDK libraries and headers
+          $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
+          echo INCLUDE=$sdkIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
+          $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
+          echo LIB=$sdkLibPath";$env:LIB" >> $env:GITHUB_ENV
+
+          $env:WindowsSdkDir = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
+          echo "WindowsSdkDir set to $env:WindowsSdkDir"
 
           # Add the SDK installation directory to the PATH
           $sdkPath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v6.0A\Bin"
@@ -80,6 +80,7 @@ jobs:
       - name: Build Solution
         working-directory: projects
         run: |
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat" &&
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
         shell: pwsh
       
