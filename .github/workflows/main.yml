@@ -86,7 +86,7 @@ jobs:
             Write-Output "Folder does not exist: $folderPath"
           }
   
-          shell: pwsh
+        shell: pwsh
 
       - name: Verify environment variables
         run: |
