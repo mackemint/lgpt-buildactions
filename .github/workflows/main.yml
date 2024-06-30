@@ -99,6 +99,10 @@ jobs:
           Get-ChildItem Env:
         shell: pwsh
 
+      - name: Copy windows.h to sources/Externals/SDL
+        run: Copy-Item -Path "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include\windows.h" -Destination "${{ github.workspace }}\sources\Externals\SDL" -Force
+        shell: pwsh
+
       - name: Build Solution
         working-directory: projects
         run: |
