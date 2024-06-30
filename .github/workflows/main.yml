@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-  
-      # - name: Install build deps
-      #   run: choco install -y directx-sdk zip --no-progress --yes
-      #   shell: powershell
+
+      - name: Install build deps
+        run: choco install -y directx-sdk zip --no-progress --yes
+        shell: powershell
 
       - name: Download and Extract VCE9 release
         run: |
@@ -34,7 +34,7 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\SDK.zip"
           Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
         shell: pwsh
-        
+
       - name: Set environment variables
         run: |
           # Set PATH to include Visual Studio 2008 binaries
@@ -88,10 +88,6 @@ jobs:
             Write-Output "Folder does not exist: $folderPath"
           }  
         shell: pwsh
-
-      - name: Install build deps
-        run: choco install -y directx-sdk zip --no-progress --yes
-        shell: powershell
 
       - name: Verify environment variables
         run: |
