@@ -501,6 +501,7 @@
     <ClInclude Include="..\sources\Externals\RTAudio\RtError.h" />
     <ClInclude Include="..\sources\Externals\RtMidi\RtError.h" />
     <ClInclude Include="..\sources\Externals\RtMidi\RtMidi.h" />
+    <ClInclude Include="..\sources\Externals\RtMidi\windows.h" />
     <ClInclude Include="..\sources\Externals\Soundfont\DATATYPE.H" />
     <ClInclude Include="..\sources\Externals\Soundfont\EMUERRS.H" />
     <ClInclude Include="..\sources\Externals\Soundfont\ENAB.H" />
