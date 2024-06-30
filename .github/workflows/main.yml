@@ -113,7 +113,7 @@ jobs:
         working-directory: projects
         run: |
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat" &&
-          devenv.exe lgpt.sln /Build Release
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\devenv.exe" lgpt.sln /Build Release
         # & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
           
         shell: pwsh
