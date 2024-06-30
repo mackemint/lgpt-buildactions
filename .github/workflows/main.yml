@@ -62,11 +62,12 @@ jobs:
           echo "WindowsSdkDir set to $env:WindowsSdkDir"
 
           # Add the SDK installation directory to the PATH
-          $sdkPath = "C:\Program Files (x86)\Microsoft SDKs\Windows\v6.0A\Bin"
+          $sdkPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin"
           echo "$sdkPath" >> $GITHUB_PATH
                 
           # Display environment variables for verification
           Get-ChildItem Env:
+          Get-ChildItem "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
         shell: pwsh
 
       - name: Verify environment variables
