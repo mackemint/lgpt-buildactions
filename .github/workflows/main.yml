@@ -30,24 +30,24 @@ jobs:
         run: |
           # Set PATH to include Visual Studio 2008 binaries
           $vcPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
-          [System.Environment]::SetEnvironmentVariable('PATH', $env:PATH + ";$vcPath", [System.EnvironmentVariableTarget]::Machine)
-  
+          echo PATH=$env:PATH";$vcPath" >> $env:GITHUB_ENV
+          
           # Set INCLUDE and LIB environment variables
           $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
           $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
-          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$vcIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Machine)
-          [System.Environment]::SetEnvironmentVariable('LIB', "$vcLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Machine)
-            
+          echo INCLUDE=$vcIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
+          echo LIB=$vcLibPath";$env:LIB" >> $env:GITHUB_ENV
+          
           $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
-          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$env:INCLUDE;$dxsdkPath\Include", [System.EnvironmentVariableTarget]::Process)
-          [System.Environment]::SetEnvironmentVariable('LIB', "$env:LIB;$dxsdkPath\Lib\x86", [System.EnvironmentVariableTarget]::Process)
-          '[System.Environment]::SetEnvironmentVariable("DXSDK_DIR", "C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)", [System.EnvironmentVariableTarget]::Machine)'
-
+          echo INCLUDE=$env:INCLUDE";$dxsdkPath\Include" >> $env:GITHUB_ENV
+          echo LIB=$env:LIB";$dxsdkPath\Lib\x86" >> $env:GITHUB_ENV
+          echo DXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" >> $env:GITHUB_ENV
+          
           # Set INCLUDE to include Windows SDK libraries and headers
           $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          [System.Environment]::SetEnvironmentVariable('INCLUDE', "$sdkIncludePath;$env:INCLUDE", [System.EnvironmentVariableTarget]::Machine)
+          echo INCLUDE=$sdkIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
           $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          [System.Environment]::SetEnvironmentVariable('LIB', "$sdkLibPath;$env:LIB", [System.EnvironmentVariableTarget]::Machine)
+          echo LIB=$sdkLibPath";$env:LIB" >> $env:GITHUB_ENV
 
           # Display environment variables for verification
           Get-ChildItem Env:
