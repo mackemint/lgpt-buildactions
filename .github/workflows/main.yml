@@ -13,8 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up MSBuild
+        uses: microsoft/setup-msbuild@v1.0.2
+  
       - name: Install build deps
-        run: choco install -y directx-sdk zip windows-sdk-6.0 --yes
+        run: choco install -y directx-sdk zip windows-sdk-10.1 --no-progress --yes
         shell: powershell
 
       - name: Download and Extract VCE9 release
