@@ -30,27 +30,36 @@ jobs:
         run: |
           # Set PATH to include Visual Studio 2008 binaries
           $vcPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
-          echo PATH=$env:PATH";$vcPath" >> $env:GITHUB_ENV
+          echo "PATH=$env:PATH;$vcPath" >> $env:GITHUB_ENV
           
-          # Set INCLUDE and LIB environment variables
+          # Set INCLUDE and LIB environment variables for Visual Studio 2008
           $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
           $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
-          echo INCLUDE=$vcIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
-          echo LIB=$vcLibPath";$env:LIB" >> $env:GITHUB_ENV
+          echo "INCLUDE=$vcIncludePath;$env:INCLUDE" >> $env:GITHUB_ENV
+          echo "LIB=$vcLibPath;$env:LIB" >> $env:GITHUB_ENV
           
+          # Set INCLUDE and LIB environment variables for DirectX SDK
           $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
-          echo INCLUDE=$env:INCLUDE";$dxsdkPath\Include" >> $env:GITHUB_ENV
-          echo LIB=$env:LIB";$dxsdkPath\Lib\x86" >> $env:GITHUB_ENV
-          echo DXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" >> $env:GITHUB_ENV
+          echo "INCLUDE=$env:INCLUDE;$dxsdkPath\Include" >> $env:GITHUB_ENV
+          echo "LIB=$env:LIB;$dxsdkPath\Lib\x86" >> $env:GITHUB_ENV
+          echo "DXSDK_DIR=C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" >> $env:GITHUB_ENV
           
-          # Set INCLUDE to include Windows SDK libraries and headers
+          # Set INCLUDE and LIB environment variables for Windows SDK
           $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          echo INCLUDE=$sdkIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
           $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          echo LIB=$sdkLibPath";$env:LIB" >> $env:GITHUB_ENV
-
+          echo "INCLUDE=$sdkIncludePath;$env:INCLUDE" >> $env:GITHUB_ENV
+          echo "LIB=$sdkLibPath;$env:LIB" >> $env:GITHUB_ENV
+          
           # Display environment variables for verification
           Get-ChildItem Env:
+        shell: pwsh
+
+      - name: Verify environment variables
+        run: |
+          Write-Output "PATH: $env:PATH"
+          Write-Output "INCLUDE: $env:INCLUDE"
+          Write-Output "LIB: $env:LIB"
+          Write-Output "DXSDK_DIR: $env:DXSDK_DIR"
         shell: pwsh
 
       - name: Build Solution
