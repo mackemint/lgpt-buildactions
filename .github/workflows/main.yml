@@ -55,6 +55,9 @@ jobs:
           # Set INCLUDE to include Windows SDK libraries and headers
           $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
           echo INCLUDE=$sdkIncludePath"$env:INCLUDE" >> $env:GITHUB_ENV
+         
+          # Add SDK include path to INCLUDE
+          [Environment]::SetEnvironmentVariable("PATH", "$sdkIncludePath;$env:PATH", "Machine")
 
           $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
           echo LIB=$sdkLibPath"$env:LIB" >> $env:GITHUB_ENV
