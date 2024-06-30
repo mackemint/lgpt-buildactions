@@ -17,7 +17,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.0.2
   
       - name: Install build deps
-        run: choco install -y directx-sdk zip windows-sdk-10.1 --no-progress --yes
+        run: choco install -y directx-sdk zip visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.Windows10SDK.19041" --no-progress --yes
         shell: powershell
 
       - name: Download and Extract VCE9 release
