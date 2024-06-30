@@ -35,39 +35,20 @@ jobs:
           Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
         shell: pwsh
 
-      - name: Set environment variables
+      - name: EvVars
         run: |
-          # Set PATH to include Visual Studio 2008 binaries
-          $vcPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
-          echo PATH=$env:PATH";$vcPath" >> $env:GITHUB_ENV
+         # Set INCLUDE and LIB environment variables
+         $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
+         $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
+         $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
+         $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
           
-          # Set INCLUDE and LIB environment variables
-          $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
-          $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
-          echo INCLUDE=$vcIncludePath";$env:INCLUDE" >> $env:GITHUB_ENV
-          echo LIB=$vcLibPath";$env:LIB" >> $env:GITHUB_ENV
-          
-          $dxsdkPath = "$env:GITHUB_WORKSPACE\DirectXSDK"
-          echo INCLUDE=$env:INCLUDE";$dxsdkPath\Include" >> $env:GITHUB_ENV
-          echo LIB=$env:LIB";$dxsdkPath\Lib\x86" >> $env:GITHUB_ENV
-          echo DXSDK_DIR="C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)" >> $env:GITHUB_ENV
-          
-          # Set INCLUDE to include Windows SDK libraries and headers
-          $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          echo INCLUDE=$sdkIncludePath"$env:INCLUDE" >> $env:GITHUB_ENV
-         
-          # Add SDK include path to INCLUDE
-          [Environment]::SetEnvironmentVariable("PATH", "$sdkIncludePath;$env:PATH", "Machine")
-
-          $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          echo LIB=$sdkLibPath"$env:LIB" >> $env:GITHUB_ENV
-
-          $WindowsSdkDir = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
-          echo PATH=$env:PATH";$WindowsSdkDir" >> $env:GITHUB_ENV
-
-          # Add the SDK installation directory to the PATH
-          $sdkPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin"
-          echo "$sdkPath" >> $GITHUB_PATH
+         echo "INCLUDE=$vcIncludePath;$sdkIncludePath;$env:INCLUDE" >> $env:GITHUB_ENV
+         echo "LIB=$vcLibPath;$sdkLibPath;$env:LIB" >> $env:GITHUB_ENV
+         # Set PATH to include necessary directories
+         $vcPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
+         $sdkPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin"
+         echo ""PATH=$env:PATH;$vcPath;$sdkPath" >> $env:GITHUB_ENV
         shell: pwsh
 
       - name: Display folders
