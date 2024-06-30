@@ -95,8 +95,12 @@ jobs:
       - name: Verify environment variables
         run: |
           $fullPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")  # Use "Machine" for system-wide variable
-          Write-Host "Full PATH variable:"
-          Write-Host $fullPath
+          $paths = $fullPath -split ';'
+          Write-Host "Individual paths in PATH variable:"
+          foreach ($path in $paths) {
+            Write-Host $path
+          }
+
         shell: pwsh
 
       - name: Copy windows.h to sources/Externals/SDL
