@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - uses: GuillaumeFalourd/setup-windows10-sdk-action@v2
 
       - name: Install build deps
         run: choco install -y directx-sdk zip --no-progress --yes
@@ -26,24 +27,6 @@ jobs:
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
   
-      - name: Download Windows SDK
-        run: |
-          $url = "https://download.microsoft.com/download/1/3/C/13CABC90-49C0-47F9-9B68-B6DAFA9F6E0C/GRMSDK_EN_DVD.iso"
-          $output = "C:\WindowsSdk.iso"
-          Invoke-WebRequest -Uri $url -OutFile $output
-        shell: pwsh
-  
-      - name: Mount ISO and Install Windows SDK
-        run: |
-          Mount-DiskImage -ImagePath "C:\WindowsSdk.iso"
-          $driveLetter = (Get-DiskImage -ImagePath "C:\WindowsSdk.iso" | Get-Volume).DriveLetter
-          & "$driveLetter`:\"setup.exe" /q /norestart
-        shell: pwsh
-  
-      - name: Unmount ISO
-        run: |
-          Dismount-DiskImage -ImagePath "C:\WindowsSdk.iso"
-        shell: pwsh
       - name: Build Solution
         working-directory: projects
         run: |
