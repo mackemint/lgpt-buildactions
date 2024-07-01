@@ -26,65 +26,14 @@ jobs:
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
 
-      - name: Display folders pre
-        run: |  
-          $folderPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
-          if (Test-Path -Path $folderPath) {
-            Get-ChildItem -Path $folderPath
-          } else {
-            Write-Output "Folder does not exist: $folderPath"
-          }
-          $folderPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          if (Test-Path -Path $folderPath) {
-            Get-ChildItem -Path $folderPath
-          } else {
-            Write-Output "Folder does not exist: $folderPath"
-          }
-          $folderPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\"
-          if (Test-Path -Path $folderPath) {
-            Get-ChildItem -Path $folderPath
-          } else {
-            Write-Output "Folder does not exist: $folderPath"
-          } 
-        shell: pwsh
-
-      - name: Download ISO
+      - name: Install Visual Studio 2008 Express
         run: |
           Invoke-WebRequest -Uri "http://download.microsoft.com/download/8/B/5/8B5804AD-4990-40D0-A6AA-CE894CBBB3DC/VS2008ExpressENUX1397868.iso" -OutFile "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso"
-      
-      - name: Mount ISO
-        run: |
           $mountResult = Mount-DiskImage -ImagePath "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso" -PassThru
           $driveLetter = ($mountResult | Get-Volume).DriveLetter
           Write-Host "ISO mounted to drive letter $driveLetter"
-        shell: pwsh
-  
-      - name: Install Visual Studio 2008 Express
-        run: |
           $driveLetter = (Get-DiskImage -ImagePath "$env:GITHUB_WORKSPACE\VS2008ExpressENUX1397868.iso" | Get-Volume).DriveLetter
           Start-Process -FilePath "${driveLetter}:\VCExpress\setup.exe" -ArgumentList '/q', '/norestart' -Wait
-        shell: pwsh
-      
-      - name: Display folders
-        run: |  
-          $folderPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
-          if (Test-Path -Path $folderPath) {
-            Get-ChildItem -Path $folderPath
-          } else {
-            Write-Output "Folder does not exist: $folderPath"
-          }
-          $folderPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          if (Test-Path -Path $folderPath) {
-            Get-ChildItem -Path $folderPath
-          } else {
-            Write-Output "Folder does not exist: $folderPath"
-          }
-          $folderPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\"
-          if (Test-Path -Path $folderPath) {
-            Get-ChildItem -Path $folderPath
-          } else {
-            Write-Output "Folder does not exist: $folderPath"
-          }
         shell: pwsh
 
       - name: Build Solution
@@ -97,14 +46,11 @@ jobs:
       - name: Package build
         shell: bash
         working-directory: projects
-        run: |
-          # mv ./bin/lgpt.exe  projects/lgpt-W32.exe
-          ./resources/packaging/lgpt_package.sh
+        run: ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
         id: extract_tag
-        run: |
-          echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
+        run: echo "::set-output name=tag_name::${GITHUB_REF#refs/tags/}"
         env:
           GITHUB_REF: ${{ github.ref }}
 
