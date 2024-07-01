@@ -140,7 +140,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>../libs/Include;../sources/Externals;../sources/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../sources/Externals;../sources/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;__WINDOWS_DS__;__WINDOWS_ASIO__;__WINDOWS_MM__;_CRT_SECURE_NO_WARNINGS;CPP_MEMORY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>
