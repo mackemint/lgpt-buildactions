@@ -25,15 +25,6 @@ jobs:
           Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\VCE9.zip"
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
-
-        # - name: Download and Extract Microsoft SDKs 
-        # run: |
-        #   $url = "https://github.com/djdiskmachine/VCE9/releases/download/v1.0.0/Microsoft.SDKs.zip"
-        #   $destination = "C:\Program Files\"
-        #   New-Item -ItemType Directory -Force -Path $destination | Out-Null
-        #   Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\SDK.zip"
-        #   Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
-        # shell: pwsh
   
       - name: Install official Microsoft SDKs 
         run: |
@@ -44,85 +35,9 @@ jobs:
           Remove-Item -Path $installer
         shell: pwsh
 
-      # - name: Display folders
-      #   run: |  
-      #     $folderPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\"
-      #     if (Test-Path -Path $folderPath) {
-      #       Get-ChildItem -Path $folderPath
-      #     } else {
-      #       Write-Output "Folder does not exist: $folderPath"
-      #     }
-      #     $folderPath = "C:\Program Files\Microsoft SDKs\Windows\"
-      #     if (Test-Path -Path $folderPath) {
-      #       Get-ChildItem -Path $folderPath
-      #     } else {
-      #       Write-Output "Folder does not exist: $folderPath"
-      #     }
-      #     $folderPath = "C:\Program Files\Microsoft SDKs\"
-      #     if (Test-Path -Path $folderPath) {
-      #       Get-ChildItem -Path $folderPath
-      #     } else {
-      #       Write-Output "Folder does not exist: $folderPath"
-      #     }  
-      #   shell: pwsh
-
-      # - name: Set environment variables
-      #   run: |
-      #     # Set INCLUDE and LIB environment variables
-      #     $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
-      #     $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
-      #     $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-      #     $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          
-      #     $newInclude = "$vcIncludePath;$sdkIncludePath;$env:INCLUDE"
-      #     $newLib = "$vcLibPath;$sdkLibPath;$env:LIB"
-      #     $newPath = "$env:PATH;$vcIncludePath;$sdkIncludePath"
-
-      #     # Correctly set the INCLUDE and LIB environment variables for the GitHub environment
-      #     echo "INCLUDE=$newInclude" | Out-File -Append -FilePath $env:GITHUB_ENV
-      #     echo "LIB=$newLib" | Out-File -Append -FilePath $env:GITHUB_ENV 
-          
-      #     Write-Host "INCLUDE: $newInclude"
-      #     Write-Host "LIB: $newLib"
-      #     Write-Host "PATH: $newPath"
-      #   shell: pwsh
-
-      # - name: Verify environment variables
-      #   run: |
-      #     Write-Host "INCLUDE: $env:INCLUDE"
-      #     Write-Host "LIB: $env:LIB"
-      #     Write-Host "PATH: $env:PATH"
-      #   shell: pwsh
-
       - name: Build Solution
         working-directory: projects
         run: |
-          Write-Host "Setting up Visual Studio environment..."
-          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat"
-          
-          # # Correctly set INCLUDE, LIB, and PATH without overwriting
-          # $env:INCLUDE = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include;" + $env:INCLUDE
-          # $env:LIB = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib;" + $env:LIB
-          # $env:PATH = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin;" + $env:PATH
-          # $env:PATH = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include;" + $env:PATH
-
-          # Write-Host "INCLUDE: $env:INCLUDE"
-          # Write-Host "LIB: $env:LIB"
-          # Write-Host "PATH: $env:PATH"
-          
-          # # Print the directories to ensure they are correct
-          # Write-Host "Contents of INCLUDE directories:"
-          # Get-ChildItem "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
-          # Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
-          
-          # Write-Host "Contents of LIB directories:"
-          # Get-ChildItem "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
-          # Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
-          
-          # Write-Host "Contents of PATH directories:"
-          # Get-ChildItem "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Bin"
-          # Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin"
-          
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
         shell: pwsh 
       
