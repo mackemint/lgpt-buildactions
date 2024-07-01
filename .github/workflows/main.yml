@@ -98,7 +98,7 @@ jobs:
         shell: bash
         working-directory: projects
         run: |
-          mv ./bin/lgpt.exe  projects/lgpt-W32.exe
+          # mv ./bin/lgpt.exe  projects/lgpt-W32.exe
           ./resources/packaging/lgpt_package.sh
 
       - name: Extract Git tag name
