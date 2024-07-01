@@ -497,6 +497,7 @@
     <ClInclude Include="..\sources\UIFramework\Interfaces\I_GUIGraphics.h" />
     <ClInclude Include="..\sources\UIFramework\SimpleBaseClasses\EventManager.h" />
     <ClInclude Include="..\sources\UIFramework\SimpleBaseClasses\GUIWindow.h" />
+    <ClInclude Include="..\sources\Externals\RTAudio\dsound.h" />
     <ClInclude Include="..\sources\Externals\RTAudio\RtAudio.h" />
     <ClInclude Include="..\sources\Externals\RTAudio\RtError.h" />
     <ClInclude Include="..\sources\Externals\RtMidi\RtError.h" />
