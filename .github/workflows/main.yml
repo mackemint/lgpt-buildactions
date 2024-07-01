@@ -26,19 +26,24 @@ jobs:
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
   
-      - name: Setup Visual Studio Environment
+      - name: Download Windows SDK
         run: |
-          Write-Host "Setting up Visual Studio environment..."
-          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat"
-          
-          $env:INCLUDE="C:\Program Files\Microsoft SDKs\Windows\v7.1\Include;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include;$env:INCLUDE"
-          $env:LIB="C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib;$env:LIB"
-          $env:PATH="C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin;$env:PATH"
-          Write-Host "INCLUDE: $env:INCLUDE"
-          Write-Host "LIB: $env:LIB"
-          Write-Host "PATH: $env:PATH"
+          $url = "https://download.microsoft.com/download/1/3/C/13CABC90-49C0-47F9-9B68-B6DAFA9F6E0C/GRMSDK_EN_DVD.iso"
+          $output = "C:\WindowsSdk.iso"
+          Invoke-WebRequest -Uri $url -OutFile $output
         shell: pwsh
-
+  
+      - name: Mount ISO and Install Windows SDK
+        run: |
+          Mount-DiskImage -ImagePath "C:\WindowsSdk.iso"
+          $driveLetter = (Get-DiskImage -ImagePath "C:\WindowsSdk.iso" | Get-Volume).DriveLetter
+          & "$driveLetter`:\"setup.exe" /q /norestart
+        shell: pwsh
+  
+      - name: Unmount ISO
+        run: |
+          Dismount-DiskImage -ImagePath "C:\WindowsSdk.iso"
+        shell: pwsh
       - name: Build Solution
         working-directory: projects
         run: |
