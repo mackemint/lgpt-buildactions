@@ -35,7 +35,7 @@ jobs:
           Expand-Archive -Path "$env:TEMP\SDK.zip" -DestinationPath $destination -Force
         shell: pwsh
 
-      - name: EvVars
+      - name: EnvVars
         run: |
          # Set INCLUDE and LIB environment variables
          $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
@@ -73,21 +73,32 @@ jobs:
           }  
         shell: pwsh
 
-      - name: Verify environment variables
+      - name: Set environment variables
         run: |
-          $fullPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")  # Use "Machine" for system-wide variable
-          $paths = $fullPath -split ';'
-          Write-Host "Individual paths in PATH variable:"
-          foreach ($path in $paths) {
-            Write-Host $path
-          }
+          # Set INCLUDE and LIB environment variables
+          $vcIncludePath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include"
+          $vcLibPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
+          $sdkIncludePath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include"
+          $sdkLibPath = "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
+          
+          $newInclude = "$vcIncludePath;$sdkIncludePath;$env:INCLUDE"
+          $newLib = "$vcLibPath;$sdkLibPath;$env:LIB"
+          $newPath = "$env:PATH;$vcIncludePath;$sdkIncludePath"
 
+          echo "INCLUDE=$newInclude" >> $env:GITHUB_ENV
+          echo "LIB=$newLib" >> $env:GITHUB_ENV
+          echo "PATH=$newPath" >> $env:GITHUB_ENV
+          
+          Write-Host "INCLUDE: $newInclude"
+          Write-Host "LIB: $newLib"
+          Write-Host "PATH: $newPath"
         shell: pwsh
 
-      - name: Copy windows.h to sources/Externals/SDL
+      - name: Verify environment variables
         run: |
-          Copy-Item -Path "C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include\windows.h" -Destination "${{ github.workspace }}\sources\Externals\RtMidi" -Force
-          Get-ChildItem -Path "${{ github.workspace }}\sources\Externals\RtMidi"
+          Write-Host "INCLUDE: $env:INCLUDE"
+          Write-Host "LIB: $env:LIB"
+          Write-Host "PATH: $env:PATH"
         shell: pwsh
 
       - name: Build Solution
