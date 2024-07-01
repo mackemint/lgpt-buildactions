@@ -76,6 +76,12 @@ jobs:
           } else {
             Write-Output "Folder does not exist: $folderPath"
           }  
+          $folderPath = "C:\Program Files (x86)\Microsoft Visual Studio 9.0\"
+          if (Test-Path -Path $folderPath) {
+            Get-ChildItem -Path $folderPath
+          } else {
+            Write-Output "Folder does not exist: $folderPath"
+          }  
         shell: pwsh
 
       # - name: Set environment variables
