@@ -1,8 +1,8 @@
 name: Release build
 
-on: [push, pull_request]
-# on: # Make a release build
-#   workflow_dispatch:
+#on: [push, pull_request]
+on: # Make a release build
+  workflow_dispatch:
 
 jobs:
   build-windows:
