@@ -90,9 +90,7 @@ jobs:
       - name: Build Solution
         working-directory: projects
         run: |
-          $vsVarsPath = Get-ChildItem -Path "C:\Program Files", "C:\Program Files (x86)" -Filter "vsvars32.bat" -Recurse | Select-Object -ExpandProperty FullName
-          Write-Output "vsvars32.bat found at: $vsVarsPath"
-          & "$vsVarsPath"          
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat"
           & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe" "lgpt.sln" "Release|Win32"
         shell: pwsh 
       
