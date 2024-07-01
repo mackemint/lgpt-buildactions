@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install build deps
-        run: choco install -y directx-sdk zip --no-progress --yes
+        run: choco install -y directx-sdk zip windows-sdk-7.1 --no-progress --yes
         shell: powershell
 
       - name: Download and Extract VCE9 release
@@ -26,13 +26,17 @@ jobs:
           Expand-Archive -Path "$env:TEMP\VCE9.zip" -DestinationPath $destination -Force
         shell: pwsh
   
-      - name: Install official Microsoft SDKs 
+      - name: Setup Visual Studio Environment
         run: |
-          $url = "https://go.microsoft.com/fwlink/?linkid=2272610"
-          $installer = "winsdksetup.exe"
-          Invoke-WebRequest -Uri $url -OutFile $installer
-          Start-Process -FilePath $installer -ArgumentList "/quiet", "/norestart" -Wait
-          Remove-Item -Path $installer
+          Write-Host "Setting up Visual Studio environment..."
+          & "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat"
+          
+          $env:INCLUDE="C:\Program Files\Microsoft SDKs\Windows\v7.1\Include;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\include;$env:INCLUDE"
+          $env:LIB="C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib;$env:LIB"
+          $env:PATH="C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin;C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\bin;$env:PATH"
+          Write-Host "INCLUDE: $env:INCLUDE"
+          Write-Host "LIB: $env:LIB"
+          Write-Host "PATH: $env:PATH"
         shell: pwsh
 
       - name: Build Solution
