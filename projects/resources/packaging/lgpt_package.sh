@@ -33,7 +33,7 @@ collect_resources() { #1PLATFORM #2lgpt.*-exe
 collect_resources PSP EBOOT.PBP
 collect_resources DEB lgpt.deb-exe
 # collect_resources RS97 lgpt.dge
-# collect_resources BITTBOY lgpt-bittboy.elf
+collect_resources BITTBOY lgpt-bittboy.elf
 collect_resources MIYOO lgpt-miyoo.elf
 # collect_resources STEAM lgpt.steam-exe
 collect_resources W32 lgpt-W32.exe
