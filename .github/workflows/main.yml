@@ -177,15 +177,15 @@ jobs:
         - name: Checkout repository
           uses: actions/checkout@v2
 
-        - name: Install Miyoo Mini toolchain
+        - name: Install Bittboy toolchain
           run: |
             wget -O /tmp/arm-buildroot-linux-musleabi_sdk-buildroot.tar.xz https://github.com/djdiskmachine/MiyooMini-toolchain/releases/download/toolchain/miyoo-toolchain-v2.0.0-arm-buildroot-linux-musleabi_sdk-buildroot.tar.gz
             mkdir /opt/arm-buildroot-linux-musleabi_sdk-buildroot
             tar -xvf /tmp/arm-buildroot-linux-musleabi_sdk-buildroot.tar.xz -C /opt/arm-buildroot-linux-musleabi_sdk-buildroot  --strip-components=1
 
-        - name: Build Miyoo Mini
+        - name: Build Bittboy
           working-directory: projects
-          run: make PLATFORM=MIYOO
+          run: make PLATFORM=BITTBOY
 
         - name: Package build
           working-directory: projects
