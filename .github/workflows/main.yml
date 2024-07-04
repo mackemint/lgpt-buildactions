@@ -262,7 +262,7 @@ jobs:
 
       - name: Enter docker
         working-directory: rg35xx-toolchain
-        run: docker run -d --name docker-rg35xx my-docker-image sleep infinity
+        run: docker build -t docker-rg35xx .
 
       - name: Clone lgpt within Docker container
         run: |
