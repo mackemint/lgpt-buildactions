@@ -259,12 +259,8 @@ jobs:
 
       - name: Clone Docker repository
         run: git clone https://github.com/edemirkan/rg35xx-toolchain.git
-
-      - name: Build LittleGPTracker
-        working-directory: rg35xx-toolchain/workspace/littlegptracker/projects
-        run: |
           
-      - name: Clone lgpt within Docker container
+      - name: Clone and build LGPT
         working-directory: rg35xx-toolchain
         run: |
           docker run -d --name rg35xx-toolchain-container -v "$(pwd)/workspace:/root/workspace" aveferrum/rg35xx-toolchain sleep infinity
