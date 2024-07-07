@@ -264,6 +264,8 @@ jobs:
             git checkout rg35xx_MIDI
             make PLATFORM=RG35XX
           "
+          pwd
+          ls -la
           sudo chmod -R 777 ./rg35xx-toolchain/workspace/LittleGPTracker/projects
           sudo chown -R root:root ./rg35xx-toolchain/workspace/LittleGPTracker/projects
 
