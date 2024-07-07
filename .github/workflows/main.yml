@@ -264,11 +264,11 @@ jobs:
             git checkout rg35xx_MIDI
             make PLATFORM=RG35XX
           "
-          sudo chmod -R 777 ./rg35xx-toolchain/LittleGPTracker/projects
-          sudo chown -R root:root ./rg35xx-toolchain/LittleGPTracker/projects
+          sudo chmod -R 777 ./rg35xx-toolchain/workspace/LittleGPTracker/projects
+          sudo chown -R root:root ./rg35xx-toolchain/workspace/LittleGPTracker/projects
 
       - name: Package build
-        working-directory: ./rg35xx-toolchain/LittleGPTracker/projects
+        working-directory: ./rg35xx-toolchain/workspace/LittleGPTracker/projects
         run: |
           curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
           unzip lgpt-resources.zip
@@ -287,4 +287,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
-          files: ./rg35xx-toolchain/LittleGPTracker/projects/*.zip
+          files: ./rg35xx-toolchain/workspace/LittleGPTracker/projects/*.zip
