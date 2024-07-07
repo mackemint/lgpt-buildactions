@@ -250,9 +250,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Clone Docker repository
-        run: git clone https://github.com/edemirkan/rg35xx-toolchain.git
           
       - name: Clone and build LGPT
         run: |
