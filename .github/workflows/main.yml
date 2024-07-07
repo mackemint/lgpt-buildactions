@@ -255,7 +255,6 @@ jobs:
         run: git clone https://github.com/edemirkan/rg35xx-toolchain.git
           
       - name: Clone and build LGPT
-        working-directory: rg35xx-toolchain
         run: |
           docker run -d --name rg35xx-container -v "$(pwd)/workspace:/root/workspace" aveferrum/rg35xx-toolchain sleep infinity
           docker exec rg35xx-container bash -c "
@@ -265,11 +264,11 @@ jobs:
             git checkout rg35xx_MIDI
             make PLATFORM=RG35XX
           "
-          chmod -R 777 ./rg35xx-toolchain/workspace/LittleGPTracker/projects
-          chown -R root:root ./rg35xx-toolchain/workspace/LittleGPTracker/projects
+          chmod -R 777 /root/workspace/LittleGPTracker/projects
+          chown -R root:root /root/workspace/LittleGPTracker/projects
 
       - name: Package build
-        working-directory: rg35xx-toolchain/workspace/LittleGPTracker/projects
+        working-directory: /root/workspace/LittleGPTracker/projects
         run: |
           curl -L -o lgpt-resources.zip https://github.com/djdiskmachine/lgpt-resources/archive/refs/tags/1.0.zip
           unzip lgpt-resources.zip
@@ -288,5 +287,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.extract_tag.outputs.tag_name }}
-          files: ./rg35xx-toolchain/workspace/LittleGPTracker/projects/*.zip
-          
+          files: /root/workspace/LittleGPTracker/projects/*.zip
