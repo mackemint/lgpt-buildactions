@@ -265,7 +265,7 @@ jobs:
         run: |
           docker run -d --name rg35xx-toolchain-container -v "$(pwd)/workspace:/root/workspace" aveferrum/rg35xx-toolchain sleep infinity
           docker exec rg35xx-toolchain-container git clone https://github.com/djdiskmachine/littlegptracker.git /root/workspace/LittleGPTracker
-          docker exec rg35xx-toolchain-container /bin/bash -c "cd LittleGPTracker/projects && make PLATFORM=RG35XX"
+          docker exec rg35xx-toolchain-container /bin/bash -c "cd LittleGPTracker/projects && ls -la && make PLATFORM=RG35XX"
 
       - name: Package build
         working-directory: rg35xx-toolchain/workspace/LittleGPTracker/projects
