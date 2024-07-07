@@ -259,13 +259,11 @@ jobs:
 
       - name: Clone Docker repository
         run: git clone https://github.com/edemirkan/rg35xx-toolchain.git
-
-      - name: Enter docker
-        working-directory: rg35xx-toolchain
-        run: docker build -t docker-rg35xx .
-
+      
       - name: Clone lgpt within Docker container
+        working-directory: rg35xx-toolchain
         run: |
+          docker build -t docker-rg35xx .
           docker run -d --name rg35xx-toolchain-container docker-rg35xx sleep infinity
           docker exec -it docker-rg35xx git clone https://github.com/your-repo/littlegptracker.git
           docker exec -it docker-rg35xx /bin/bash -c "cd LittleGPTracker/projects && make PLATFORM=RG35XX"
