@@ -265,6 +265,8 @@ jobs:
             git checkout rg35xx_MIDI
             make PLATFORM=RG35XX
           "
+          chmod -R 777 ./rg35xx-toolchain/workspace/LittleGPTracker/projects
+          chown -R root:root ./rg35xx-toolchain/workspace/LittleGPTracker/projects
 
       - name: Package build
         working-directory: rg35xx-toolchain/workspace/LittleGPTracker/projects
