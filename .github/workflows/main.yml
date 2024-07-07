@@ -258,10 +258,12 @@ jobs:
         working-directory: rg35xx-toolchain
         run: |
           docker run -d --name rg35xx-container -v "$(pwd)/workspace:/root/workspace" aveferrum/rg35xx-toolchain sleep infinity
-          docker exec rg35xx-container "
+          docker exec rg35xx-container bash -c "
             sudo apt update && sudo apt install -y python3 python3-pillow
-            git clone https://github.com/djdiskmachine/littlegptracker.git /root/workspace/LittleGPTracker
-            /bin/bash -c "cd LittleGPTracker/projects && git checkout rg35xx_MIDI && make PLATFORM=RG35XX
+            git clone https://github.com/djdiskmachine/littlegptracker.git
+            cd LittleGPTracker/projects
+            git checkout rg35xx_MIDI
+            make PLATFORM=RG35XX
           "
 
       - name: Package build
